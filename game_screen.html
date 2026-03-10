@@ -118,13 +118,13 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 .name-box {
 position: absolute; bottom: 28%; left: 4%; z-index: 21;
 background: rgba(5,4,14,0.97);
-border: 2px solid var(–nb-border, rgba(210,175,90,0.8));
+border: 2px solid rgba(210,175,90,0.8);
 border-bottom: none;
 padding: 1% 3% 1%; border-radius: 5px 5px 0 0;
-transition: border-color 0.6s;
+transition: border-color 0.6s, color 0.6s;
 }
 .name-text {
-color: var(–name-color, #f5e4b0);
+color: #f5e4b0;
 font-size: clamp(10px, 2vw, 16px); font-weight: 700; letter-spacing: 3px;
 text-shadow: 0 1px 6px rgba(0,0,0,0.7); transition: color 0.6s;
 font-family: ‘Noto Serif JP’, serif; white-space: nowrap;
@@ -132,7 +132,7 @@ font-family: ‘Noto Serif JP’, serif; white-space: nowrap;
 .textbox {
 position: absolute; bottom: 0; left: 0; right: 0;
 height: 28%; z-index: 20;
-border-top: 3px solid var(–tb-border, rgba(210,175,90,0.8));
+border-top: 3px solid rgba(210,175,90,0.8);
 padding: 3% 5% 2%;
 background: rgba(5,4,14,0.97);
 backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -140,10 +140,10 @@ transition: border-color 0.6s; overflow: hidden; box-sizing: border-box;
 }
 .textbox::before {
 content:’’; position:absolute; top:0; left:0; right:0; height:1px;
-background: var(–tb-line, linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent));
+background: linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent);
 }
 .dialogue {
-color: var(–dlg-color, #f0e8d8);
+color: #f0e8d8;
 font-size: clamp(10px, 2vw, 17px); line-height: 1.8; letter-spacing: 0.05em;
 text-shadow: 0 1px 4px rgba(0,0,0,0.9); transition: color 0.6s;
 font-family: ‘Noto Serif JP’, serif;
@@ -151,28 +151,13 @@ font-family: ‘Noto Serif JP’, serif;
 .next-cursor {
 position:absolute; bottom:8%; right:3%;
 width:clamp(7px,1.2vw,12px); height:clamp(7px,1.2vw,12px);
-border-right:2px solid var(–cursor-color,rgba(210,175,90,0.8));
-border-bottom:2px solid var(–cursor-color,rgba(210,175,90,0.8));
+border-right:2px solid rgba(210,175,90,0.8);
+border-bottom:2px solid rgba(210,175,90,0.8);
 transform:rotate(45deg); animation:blink-cursor 1.3s ease-in-out infinite;
 }
 @keyframes blink-cursor{0%,100%{opacity:1;transform:rotate(45deg) translateY(0);}50%{opacity:0.2;transform:rotate(45deg) translateY(2px);}}
 
 /* シーン別カラー変数 */
-.scene-manor  {–tb-border:rgba(210,175,90,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent);–nb-border:rgba(200,165,80,0.8);–name-color:#f5e4b0;–dlg-color:#f0e8d8;–cursor-color:rgba(210,175,90,0.8);}
-.scene-horror {–tb-border:rgba(220,40,40,0.9);–tb-line:linear-gradient(90deg,transparent,rgba(180,20,20,0.5) 25%,rgba(220,40,40,0.7) 50%,rgba(180,20,20,0.5) 75%,transparent);–nb-border:rgba(200,30,30,0.9);–name-color:#ffb0b0;–dlg-color:#f5dada;–cursor-color:rgba(200,40,40,0.8);}
-.scene-idol   {–tb-border:rgba(255,150,220,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(255,120,200,0.5) 25%,rgba(255,200,255,0.8) 50%,rgba(120,180,255,0.5) 75%,transparent);–nb-border:rgba(255,150,220,0.8);–name-color:#ffd6f5;–dlg-color:#f8eeff;–cursor-color:rgba(255,150,220,0.9);}
-.scene-sakura {–tb-border:rgba(230,160,185,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(220,140,170,0.6) 25%,rgba(255,180,210,0.8) 50%,rgba(220,140,170,0.6) 75%,transparent);–nb-border:rgba(220,150,180,0.8);–name-color:#ffd6e8;–dlg-color:#fff0f5;–cursor-color:rgba(230,150,180,0.9);}
-.scene-school {–tb-border:rgba(120,160,230,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(100,140,200,0.5) 25%,rgba(150,185,240,0.8) 50%,rgba(100,140,200,0.5) 75%,transparent);–nb-border:rgba(120,155,220,0.8);–name-color:#c8deff;–dlg-color:#eef4ff;–cursor-color:rgba(130,170,230,0.9);}
-.scene-city   {–tb-border:rgba(80,200,240,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(60,180,220,0.5) 25%,rgba(100,220,255,0.8) 50%,rgba(60,180,220,0.5) 75%,transparent);–nb-border:rgba(60,180,220,0.8);–name-color:#b8f0ff;–dlg-color:#e8f8ff;–cursor-color:rgba(80,200,230,0.9);}
-.scene-church {–tb-border:rgba(190,165,235,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(160,140,210,0.5) 25%,rgba(200,180,255,0.8) 50%,rgba(160,140,210,0.5) 75%,transparent);–nb-border:rgba(180,160,230,0.8);–name-color:#e8e0ff;–dlg-color:#f5f2ff;–cursor-color:rgba(180,160,230,0.9);}
-.scene-cafe   {–tb-border:rgba(200,155,80,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(180,140,80,0.5) 25%,rgba(220,180,100,0.8) 50%,rgba(180,140,80,0.5) 75%,transparent);–nb-border:rgba(190,150,80,0.8);–name-color:#f5e4b0;–dlg-color:#fff8ec;–cursor-color:rgba(200,160,80,0.9);}
-.scene-beach  {–tb-border:rgba(240,110,40,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(220,100,40,0.5) 25%,rgba(255,150,60,0.8) 50%,rgba(220,100,40,0.5) 75%,transparent);–nb-border:rgba(220,100,40,0.8);–name-color:#ffd8a0;–dlg-color:#fff5e8;–cursor-color:rgba(240,140,60,0.9);}
-.scene-library{–tb-border:rgba(190,145,75,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(160,125,70,0.5) 25%,rgba(200,165,100,0.8) 50%,rgba(160,125,70,0.5) 75%,transparent);–nb-border:rgba(170,130,70,0.8);–name-color:#f0deb0;–dlg-color:#fdf6e8;–cursor-color:rgba(190,150,80,0.9);}
-.scene-forest {–tb-border:rgba(80,175,55,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(70,150,50,0.5) 25%,rgba(100,190,70,0.8) 50%,rgba(70,150,50,0.5) 75%,transparent);–nb-border:rgba(80,160,50,0.8);–name-color:#d0f0b0;–dlg-color:#f0fce8;–cursor-color:rgba(90,180,60,0.9);}
-.scene-shrine {–tb-border:rgba(200,50,35,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(180,40,25,0.5) 25%,rgba(220,60,40,0.8) 50%,rgba(180,40,25,0.5) 75%,transparent);–nb-border:rgba(200,50,35,0.8);–name-color:#ffd0c0;–dlg-color:#fff5f0;–cursor-color:rgba(210,60,40,0.9);}
-.scene-train  {–tb-border:rgba(100,135,230,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(80,110,200,0.5) 25%,rgba(120,150,240,0.8) 50%,rgba(80,110,200,0.5) 75%,transparent);–nb-border:rgba(100,130,220,0.8);–name-color:#c0d0ff;–dlg-color:#eef2ff;–cursor-color:rgba(120,150,230,0.9);}
-.scene-space  {–tb-border:rgba(175,95,245,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(120,60,200,0.5) 25%,rgba(180,100,255,0.8) 50%,rgba(120,60,200,0.5) 75%,transparent);–nb-border:rgba(160,90,240,0.8);–name-color:#e0c0ff;–dlg-color:#f5eeff;–cursor-color:rgba(180,110,255,0.9);}
-.scene-hospital{–tb-border:rgba(115,165,225,0.8);–tb-line:linear-gradient(90deg,transparent,rgba(100,148,200,0.5) 25%,rgba(140,190,240,0.8) 50%,rgba(100,148,200,0.5) 75%,transparent);–nb-border:rgba(120,168,220,0.8);–name-color:#d0e8ff;–dlg-color:#f0f8ff;–cursor-color:rgba(130,178,230,0.9);}
 
 .topbar{position:absolute;top:0;left:0;right:0;height:6.5%;display:flex;align-items:center;justify-content:flex-end;padding:0 2%;gap:1.5%;z-index:20;pointer-events:none;}
 .topbar > *{pointer-events:auto;}
@@ -1456,10 +1441,10 @@ resize: vertical; min-height: 62px; line-height: 1.7;
   </div>
 
   <!-- テキストボックス -->
-  <div class="name-box"><span class="name-text" id="nameText">エメラ</span></div>
-  <div class="textbox">
-    <div class="dialogue" id="dialogue">この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。</div>
-    <div class="next-cursor"></div>
+  <div class="name-box" id="nameBox" style="position:absolute;bottom:28%;left:4%;z-index:21;background:rgba(5,4,14,0.97);border:2px solid rgba(210,175,90,0.8);border-bottom:none;padding:1% 3% 1%;border-radius:5px 5px 0 0;"><span class="name-text" id="nameText" style="color:#f5e4b0;font-size:clamp(10px,2vw,16px);font-weight:700;letter-spacing:3px;text-shadow:0 1px 6px rgba(0,0,0,0.7);font-family:'Noto Serif JP',serif;white-space:nowrap;">エメラ</span></div>
+  <div class="textbox" id="textBox" style="position:absolute;bottom:0;left:0;right:0;height:28%;z-index:20;border-top:3px solid rgba(210,175,90,0.8);padding:3% 5% 2%;background:rgba(5,4,14,0.97);overflow:hidden;box-sizing:border-box;">
+    <div class="dialogue" id="dialogue" style="color:#f0e8d8;font-size:clamp(10px,2vw,17px);line-height:1.8;letter-spacing:0.05em;text-shadow:0 1px 4px rgba(0,0,0,0.9);font-family:'Noto Serif JP',serif;">この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。</div>
+    <div class="next-cursor" id="nextCursor" style="position:absolute;bottom:8%;right:3%;width:clamp(7px,1.2vw,12px);height:clamp(7px,1.2vw,12px);border-right:2px solid rgba(210,175,90,0.8);border-bottom:2px solid rgba(210,175,90,0.8);transform:rotate(45deg);animation:blink-cursor 1.3s ease-in-out infinite;"></div>
   </div>
 
   <div id="drop-zone"><p>ここにイラストをドロップ</p></div>
@@ -1647,6 +1632,38 @@ const scenes = {
 
 let customBgCount = 0, currentCustomId = null;
 
+const sceneStyles = {
+  manor:    { border:'rgba(210,175,90,0.8)',  line:'rgba(210,175,90,0.6)',  name:'#f5e4b0', dlg:'#f0e8d8', cursor:'rgba(210,175,90,0.8)' },
+  horror:   { border:'rgba(220,40,40,0.9)',   line:'rgba(220,40,40,0.7)',   name:'#ffb0b0', dlg:'#f5dada', cursor:'rgba(200,40,40,0.8)' },
+  idol:     { border:'rgba(255,150,220,0.8)', line:'rgba(255,150,220,0.6)', name:'#ffd6f5', dlg:'#f8eeff', cursor:'rgba(255,150,220,0.9)' },
+  sakura:   { border:'rgba(230,160,185,0.8)', line:'rgba(220,140,170,0.6)', name:'#ffd6e8', dlg:'#fff0f5', cursor:'rgba(230,150,180,0.9)' },
+  school:   { border:'rgba(120,160,230,0.8)', line:'rgba(120,160,220,0.6)', name:'#c8deff', dlg:'#eef4ff', cursor:'rgba(130,170,230,0.9)' },
+  city:     { border:'rgba(80,200,240,0.8)',  line:'rgba(80,200,240,0.6)',  name:'#b8f0ff', dlg:'#e8f8ff', cursor:'rgba(80,200,230,0.9)' },
+  church:   { border:'rgba(190,165,235,0.8)', line:'rgba(180,150,220,0.6)', name:'#e8e0ff', dlg:'#f5f2ff', cursor:'rgba(180,160,230,0.9)' },
+  cafe:     { border:'rgba(200,155,80,0.8)',  line:'rgba(190,145,75,0.6)',  name:'#f5e4b0', dlg:'#fff8ec', cursor:'rgba(200,160,80,0.9)' },
+  beach:    { border:'rgba(240,110,40,0.8)',  line:'rgba(230,105,40,0.6)',  name:'#ffd8a0', dlg:'#fff5e8', cursor:'rgba(240,140,60,0.9)' },
+  library:  { border:'rgba(190,145,75,0.8)',  line:'rgba(180,135,70,0.6)',  name:'#f0deb0', dlg:'#fdf6e8', cursor:'rgba(190,150,80,0.9)' },
+  forest:   { border:'rgba(80,175,55,0.8)',   line:'rgba(75,165,50,0.6)',   name:'#d0f0b0', dlg:'#f0fce8', cursor:'rgba(90,180,60,0.9)' },
+  shrine:   { border:'rgba(200,50,35,0.8)',   line:'rgba(190,45,30,0.6)',   name:'#ffd0c0', dlg:'#fff5f0', cursor:'rgba(210,60,40,0.9)' },
+  train:    { border:'rgba(100,135,230,0.8)', line:'rgba(95,130,220,0.6)',  name:'#c0d0ff', dlg:'#eef2ff', cursor:'rgba(120,150,230,0.9)' },
+  space:    { border:'rgba(175,95,245,0.8)',  line:'rgba(165,90,235,0.6)',  name:'#e0c0ff', dlg:'#f5eeff', cursor:'rgba(180,110,255,0.9)' },
+  hospital: { border:'rgba(115,165,225,0.8)', line:'rgba(110,160,215,0.6)', name:'#d0e8ff', dlg:'#f0f8ff', cursor:'rgba(130,178,230,0.9)' },
+};
+
+function applySceneStyle(name) {
+  const s = sceneStyles[name] || sceneStyles.manor;
+  const tb = document.getElementById('textBox');
+  const nb = document.getElementById('nameBox');
+  const dlg = document.getElementById('dialogue');
+  const nt = document.getElementById('nameText');
+  const cur = document.getElementById('nextCursor');
+  if (tb) tb.style.borderTopColor = s.border;
+  if (nb) nb.style.borderColor = s.border;
+  if (dlg) dlg.style.color = s.dlg;
+  if (nt) nt.style.color = s.name;
+  if (cur) { cur.style.borderRightColor = s.cursor; cur.style.borderBottomColor = s.cursor; }
+}
+
 function switchScene(name, btn) {
   currentCustomId = null;
   document.getElementById('game').className = 'game-container scene-' + name;
@@ -1660,6 +1677,7 @@ function switchScene(name, btn) {
   document.getElementById('edit-dialogue').value = scenes[name].text.replace(/<br>/g, '\n');
   document.getElementById('dialogue').innerHTML = scenes[name].text;
   document.getElementById('edit-title').value = scenes[name].title;
+  applySceneStyle(name);
 }
 
 function switchCustomScene(id, btn) {
