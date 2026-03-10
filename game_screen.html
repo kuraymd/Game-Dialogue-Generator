@@ -1795,8 +1795,8 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
   </div>
 
   <!-- キャラクター1（右側・デフォルト） -->
-  <div class="character-wrap" id="charWrap">
-    <img class="character" id="charImg" src="character.png" alt="キャラクター1">
+  <div class="character-wrap hidden" id="charWrap">
+    <img class="character" id="charImg" src="" alt="キャラクター1">
     <div class="drop-hint"><span>キャラ1</span></div>
   </div>
   <!-- キャラクター2（左側・初期非表示） -->
@@ -1859,7 +1859,7 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 <div class="char-slot active" id="slot1">
   <div class="char-upload-row">
     <button class="char-upload-btn" onclick="document.getElementById('charFile1').click()">📂 画像を選択</button>
-    <span class="char-filename" id="fname1">character.png</span>
+    <span class="char-filename" id="fname1">未設定</span>
     <button class="char-upload-btn danger" onclick="resetChar1Img()">✕ 画像を外す</button>
   </div>
   <div class="control-panel">
