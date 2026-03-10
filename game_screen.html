@@ -554,83 +554,6 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 </head>
 <body>
 
-<!-- ヘルプモーダル -->
-
-<div class="help-overlay" id="helpOverlay">
-  <div class="help-modal">
-    <div class="help-title">✦ 使い方ガイド</div>
-    <div class="help-subtitle">GAME DIALOGUE GENERATOR</div>
-
-```
-<div class="help-section-title">🌄 背景を選ぶ</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">🖼️</span>
-    <div class="help-step-text">
-      ゲーム画面の下にある背景ボタンを押すと、背景が切り替わります。
-      <small>洋館・カフェ・海辺・宇宙など15種類から選べます</small>
-    </div>
-  </div>
-  <div class="help-step">
-    <span class="help-step-icon">＋</span>
-    <div class="help-step-text">
-      「＋ 背景を追加」ボタンから、自分で用意した背景画像を追加できます。
-      <small>JPG・PNG・GIFなどの画像ファイルに対応しています</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">🎭 キャラクターを設定する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">👤</span>
-    <div class="help-step-text">
-      「キャラクター 1」「キャラクター 2」タブを切り替えて、それぞれ画像をアップロードできます。
-      <small>透明背景（PNG）の画像を使うときれいに表示されます</small>
-    </div>
-  </div>
-  <div class="help-step">
-    <span class="help-step-icon">↔️</span>
-    <div class="help-step-text">
-      スライダーでキャラクターのサイズ・左右の位置・上下の位置を調整できます。
-      <small>「↺ リセット」でデフォルト位置に戻せます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">✏️ テキストを編集する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">📝</span>
-    <div class="help-step-text">
-      「タイトル」「キャラクター名」「会話文」の入力欄を書き換えると、ゲーム画面にリアルタイムで反映されます。
-      <small>会話文は改行すると2行目に分かれます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">📷 画像を保存する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">💾</span>
-    <div class="help-step-text">
-      「📷 画像を保存」ボタンを押すと、ゲーム画面がPNG画像としてダウンロードされます。
-      <small>ファイル名には日時が自動でつきます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-close-row">
-  <button class="help-close-btn" onclick="closeHelp()">は じ め る</button>
-</div>
-```
-
-  </div>
-</div>
-
 <!-- ゲーム画面（16:9 アスペクト比） -->
 
 <div class="game-outer">
@@ -2220,19 +2143,71 @@ game.addEventListener('drop', e => {
   loadCharImage(file, 'charImg', 'fname1', 'charWrap');
 });
 
+
 // ==============================
-// ヘルプモーダル
+// ヘルプモーダル（JS生成）
 // ==============================
+(function() {
+  const overlay = document.createElement('div');
+  overlay.id = 'helpOverlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.82);display:flex;align-items:center;justify-content:center;padding:16px;';
+
+  overlay.innerHTML = `
+    <div style="background:linear-gradient(160deg,#12101e,#1a1630);border:1px solid rgba(255,255,255,0.15);border-radius:12px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,0.9);font-family:sans-serif;">
+      <div style="font-size:20px;color:#f5e4b0;letter-spacing:2px;margin-bottom:4px;">✦ 使い方ガイド</div>
+      <div style="font-size:11px;color:rgba(200,185,150,0.5);letter-spacing:2px;margin-bottom:20px;">GAME DIALOGUE GENERATOR</div>
+
+      <div style="font-size:11px;color:rgba(210,175,90,0.8);letter-spacing:2px;margin-bottom:10px;">🌄 背景を選ぶ</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="font-size:18px;flex-shrink:0;">🖼️</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">下の背景ボタンを押すと切り替わります。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">洋館・カフェ・海辺・宇宙など15種類</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="font-size:18px;flex-shrink:0;">➕</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">「＋ 背景を追加」で自分の画像を追加できます。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">JPG・PNG・GIFに対応</span></div>
+      </div>
+
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.8);letter-spacing:2px;margin-bottom:10px;">🎭 キャラクターを設定する</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="font-size:18px;flex-shrink:0;">👤</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">タブを切り替えて1・2それぞれに画像をアップロード。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">透明背景（PNG）を使うときれいに表示されます</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="font-size:18px;flex-shrink:0;">↔️</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">スライダーでサイズ・位置を調整できます。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">「↺ リセット」でデフォルト位置に戻ります</span></div>
+      </div>
+
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.8);letter-spacing:2px;margin-bottom:10px;">✏️ テキストを編集する</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="font-size:18px;flex-shrink:0;">📝</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">タイトル・名前・会話文を入力するとリアルタイムで反映。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">会話文は改行で2行に分かれます</span></div>
+      </div>
+
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.8);letter-spacing:2px;margin-bottom:10px;">📷 画像を保存する</div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <span style="font-size:18px;flex-shrink:0;">💾</span>
+        <div style="font-size:13px;color:#e8e0d0;line-height:1.8;">「📷 画像を保存」でゲーム画面をPNGでダウンロード。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">ファイル名に日時が自動でつきます</span></div>
+      </div>
+
+      <div style="display:flex;justify-content:center;">
+        <button onclick="document.getElementById('helpOverlay').style.display='none'" style="padding:10px 40px;border-radius:6px;border:1px solid rgba(210,175,90,0.5);background:rgba(210,175,90,0.12);color:rgba(240,210,130,0.95);font-size:14px;letter-spacing:3px;cursor:pointer;">は じ め る</button>
+      </div>
+    </div>`;
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
+
+  document.body.appendChild(overlay);
+})();
+
 function openHelp() {
-  document.getElementById('helpOverlay').classList.remove('hidden');
+  document.getElementById('helpOverlay').style.display = 'flex';
 }
-function closeHelp() {
-  document.getElementById('helpOverlay').classList.add('hidden');
-}
-// 背景クリックで閉じる
-document.getElementById('helpOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeHelp();
-});
+
 </script>
 
 </body>
