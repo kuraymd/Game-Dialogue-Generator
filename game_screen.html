@@ -463,10 +463,171 @@ font-size: clamp(9px,1vw,11px);
 letter-spacing: 1px;
 font-family: ‘Noto Sans JP’, sans-serif;
 }
+
+/* ==============================
+ヘルプモーダル
+============================== */
+.help-overlay {
+position: fixed; inset: 0; z-index: 1000;
+background: rgba(0,0,0,0.75);
+display: flex; align-items: center; justify-content: center;
+padding: 16px;
+animation: fadeIn 0.3s ease;
+}
+.help-overlay.hidden { display: none; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.help-modal {
+background: linear-gradient(160deg, #12101e, #1a1630);
+border: 1px solid rgba(255,255,255,0.12);
+border-radius: 12px;
+max-width: 560px; width: 100%;
+max-height: 88vh;
+overflow-y: auto;
+padding: 28px 28px 24px;
+box-shadow: 0 24px 80px rgba(0,0,0,0.9);
+}
+.help-modal::-webkit-scrollbar { width: 4px; }
+.help-modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.help-title {
+font-family: ‘Noto Serif JP’, serif;
+font-size: clamp(16px, 3vw, 22px);
+color: #f5e4b0; letter-spacing: 3px; margin-bottom: 6px;
+}
+.help-subtitle {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-size: clamp(10px, 1.5vw, 13px);
+color: rgba(200,185,150,0.5); letter-spacing: 2px; margin-bottom: 24px;
+}
+.help-divider {
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(210,175,90,0.4) 30%, rgba(240,210,130,0.6) 50%, rgba(210,175,90,0.4) 70%, transparent);
+margin: 20px 0;
+}
+.help-section-title {
+font-family: ‘Noto Sans JP’, sans-serif;
+font-size: clamp(10px, 1.3vw, 12px);
+color: rgba(210,175,90,0.7); letter-spacing: 3px; margin-bottom: 12px;
+}
+.help-steps { display: flex; flex-direction: column; gap: 10px; }
+.help-step { display: flex; align-items: flex-start; gap: 12px; }
+.help-step-num {
+flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+background: rgba(210,175,90,0.15); border: 1px solid rgba(210,175,90,0.35);
+color: rgba(210,175,90,0.9); font-size: 11px;
+font-family: ‘Noto Sans JP’, sans-serif;
+display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.help-step-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.help-step-text {
+font-family: ‘Noto Serif JP’, serif;
+font-size: clamp(11px, 1.6vw, 14px);
+color: #e8e0d0; line-height: 1.8; letter-spacing: 0.03em;
+}
+.help-step-text small {
+display: block; font-family: ‘Noto Sans JP’, sans-serif;
+font-size: clamp(9px, 1.1vw, 11px);
+color: rgba(200,185,150,0.5); margin-top: 2px; letter-spacing: 0.5px;
+}
+.help-close-row { margin-top: 24px; display: flex; justify-content: center; }
+.help-close-btn {
+padding: 10px 36px; border-radius: 6px;
+border: 1px solid rgba(210,175,90,0.4);
+background: rgba(210,175,90,0.1);
+color: rgba(240,210,130,0.9);
+font-size: clamp(12px, 1.5vw, 14px); letter-spacing: 3px;
+cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-serif;
+}
+.help-close-btn:hover { background: rgba(210,175,90,0.22); color: #fff; }
+.help-open-btn {
+padding: 5px 14px; border-radius: 4px;
+border: 1px solid rgba(210,175,90,0.3);
+background: rgba(210,175,90,0.07);
+color: rgba(210,185,120,0.7);
+font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
+cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-serif;
+}
+.help-open-btn:hover { background: rgba(210,175,90,0.18); color:#fff; }
 </style>
 
 </head>
 <body>
+
+<!-- ヘルプモーダル -->
+
+<div class="help-overlay" id="helpOverlay">
+  <div class="help-modal">
+    <div class="help-title">✦ 使い方ガイド</div>
+    <div class="help-subtitle">GAME DIALOGUE GENERATOR</div>
+
+```
+<div class="help-section-title">🌄 背景を選ぶ</div>
+<div class="help-steps">
+  <div class="help-step">
+    <span class="help-step-icon">🖼️</span>
+    <div class="help-step-text">
+      ゲーム画面の下にある背景ボタンを押すと、背景が切り替わります。
+      <small>洋館・カフェ・海辺・宇宙など15種類から選べます</small>
+    </div>
+  </div>
+  <div class="help-step">
+    <span class="help-step-icon">＋</span>
+    <div class="help-step-text">
+      「＋ 背景を追加」ボタンから、自分で用意した背景画像を追加できます。
+      <small>JPG・PNG・GIFなどの画像ファイルに対応しています</small>
+    </div>
+  </div>
+</div>
+
+<div class="help-divider"></div>
+<div class="help-section-title">🎭 キャラクターを設定する</div>
+<div class="help-steps">
+  <div class="help-step">
+    <span class="help-step-icon">👤</span>
+    <div class="help-step-text">
+      「キャラクター 1」「キャラクター 2」タブを切り替えて、それぞれ画像をアップロードできます。
+      <small>透明背景（PNG）の画像を使うときれいに表示されます</small>
+    </div>
+  </div>
+  <div class="help-step">
+    <span class="help-step-icon">↔️</span>
+    <div class="help-step-text">
+      スライダーでキャラクターのサイズ・左右の位置・上下の位置を調整できます。
+      <small>「↺ リセット」でデフォルト位置に戻せます</small>
+    </div>
+  </div>
+</div>
+
+<div class="help-divider"></div>
+<div class="help-section-title">✏️ テキストを編集する</div>
+<div class="help-steps">
+  <div class="help-step">
+    <span class="help-step-icon">📝</span>
+    <div class="help-step-text">
+      「タイトル」「キャラクター名」「会話文」の入力欄を書き換えると、ゲーム画面にリアルタイムで反映されます。
+      <small>会話文は改行すると2行目に分かれます</small>
+    </div>
+  </div>
+</div>
+
+<div class="help-divider"></div>
+<div class="help-section-title">📷 画像を保存する</div>
+<div class="help-steps">
+  <div class="help-step">
+    <span class="help-step-icon">💾</span>
+    <div class="help-step-text">
+      「📷 画像を保存」ボタンを押すと、ゲーム画面がPNG画像としてダウンロードされます。
+      <small>ファイル名には日時が自動でつきます</small>
+    </div>
+  </div>
+</div>
+
+<div class="help-close-row">
+  <button class="help-close-btn" onclick="closeHelp()">は じ め る</button>
+</div>
+```
+
+  </div>
+</div>
 
 <!-- ゲーム画面（16:9 アスペクト比） -->
 
@@ -1752,6 +1913,7 @@ font-family: ‘Noto Sans JP’, sans-serif;
     <button class="file-btn" onclick="document.getElementById('file-input').click()">📂 ファイルを選択</button>
     <span class="guide-text">またはゲーム画面にドラッグ＆ドロップ</span>
     <button class="save-btn" id="saveBtn" onclick="saveScreenshot()">📷 画像を保存</button>
+    <button class="help-open-btn" onclick="openHelp()">❓ 使い方</button>
   </div>
   <!-- テキスト編集 -->
   <div class="text-panel">
@@ -2055,6 +2217,20 @@ game.addEventListener('drop', e => {
   // ドロップはキャラ1に適用
   const file = e.dataTransfer.files[0];
   loadCharImage(file, 'charImg', 'fname1', 'charWrap');
+});
+
+// ==============================
+// ヘルプモーダル
+// ==============================
+function openHelp() {
+  document.getElementById('helpOverlay').classList.remove('hidden');
+}
+function closeHelp() {
+  document.getElementById('helpOverlay').classList.add('hidden');
+}
+// 背景クリックで閉じる
+document.getElementById('helpOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeHelp();
 });
 </script>
 
