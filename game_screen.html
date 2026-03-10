@@ -349,7 +349,7 @@ box-shadow: 0 0 6px rgba(215,185,115,0.5); cursor: pointer;
 
 /* ガイド行 */
 .guide-row {
-display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
 }
 .guide-text {
 color: rgba(180,160,120,0.45);
@@ -1906,16 +1906,8 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 
   </div>
 
-  <!-- ファイル差し替え・保存 -->
-
-  <div class="guide-row">
-    <span class="guide-text">イラストの差し替え：</span>
-    <button class="file-btn" onclick="document.getElementById('file-input').click()">📂 ファイルを選択</button>
-    <span class="guide-text">またはゲーム画面にドラッグ＆ドロップ</span>
-    <button class="save-btn" id="saveBtn" onclick="saveScreenshot()">📷 画像を保存</button>
-    <button class="help-open-btn" onclick="openHelp()">❓ 使い方</button>
-  </div>
   <!-- テキスト編集 -->
+
   <div class="text-panel">
     <div class="text-panel-title">✏️ テキスト編集</div>
     <div class="text-row">
@@ -1935,6 +1927,13 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 村のひとたちはそう言うの。</textarea>
       </div>
     </div>
+  </div>
+
+  <!-- 保存・ヘルプ -->
+
+  <div class="guide-row">
+    <button class="save-btn" id="saveBtn" onclick="saveScreenshot()">📷 画像を保存</button>
+    <button class="help-open-btn" onclick="openHelp()">❓ 使い方</button>
   </div>
 
 </div><!-- /.ui-wrap -->
