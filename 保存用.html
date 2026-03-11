@@ -5,8 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ビジュアルノベル - ゲーム画面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400&display=swap');
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
@@ -20,75 +22,38 @@ gap: 12px;
 font-family: ‘Noto Sans JP’, sans-serif;
 }
 
-/* ==============================
-ゲーム画面ラッパー（16:9 比率維持）
-============================== */
-.game-outer {
-width: 100%;
-max-width: 960px;
-}
-.game-aspect {
-position: relative;
-width: 100%;
-padding-top: 56.25%; /* 9/16 */
-}
+.game-outer { width: 100%; max-width: 960px; }
+.game-aspect { position: relative; width: 100%; padding-top: 56.25%; }
 .game-container {
-position: absolute;
-inset: 0;
-overflow: hidden;
+position: absolute; inset: 0; overflow: hidden;
 border-radius: 6px;
 box-shadow: 0 16px 60px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-/* ==============================
-背景レイヤー
-============================== */
 .bg-layer {
-position: absolute; inset: 0;
-width: 100%; height: 100%;
-transition: opacity 0.7s ease;
-opacity: 0; pointer-events: none;
+position: absolute; inset: 0; width: 100%; height: 100%;
+transition: opacity 0.7s ease; opacity: 0; pointer-events: none;
 }
 .bg-layer.active { opacity: 1; }
-.custom-bg-layer {
-position: absolute; inset: 0;
-width: 100%; height: 100%;
-display: none; z-index: 0;
-}
+.custom-bg-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: none; z-index: 0; }
 .custom-bg-layer.active { display: block; }
 
-/* ==============================
-エフェクト
-============================== */
 .horror-flicker {
-position: absolute; inset: 0;
-background: rgba(180,0,0,0.07);
-animation: flicker 5s infinite;
-pointer-events: none; opacity: 0;
+position: absolute; inset: 0; background: rgba(180,0,0,0.07);
+animation: flicker 5s infinite; pointer-events: none; opacity: 0;
 transition: opacity 0.7s; z-index: 5;
 }
 .scene-horror .horror-flicker { opacity: 1; }
-@keyframes flicker {
-0%,95%,100%{opacity:0;} 96%{opacity:0.5;} 97%{opacity:0.1;} 98%{opacity:0.6;} 99%{opacity:0.2;}
-}
+@keyframes flicker { 0%,95%,100%{opacity:0;} 96%{opacity:0.5;} 97%{opacity:0.1;} 98%{opacity:0.6;} 99%{opacity:0.2;} }
 .scanlines {
 position: absolute; inset: 0;
 background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);
-pointer-events: none; opacity: 0;
-transition: opacity 0.7s; z-index: 4;
+pointer-events: none; opacity: 0; transition: opacity 0.7s; z-index: 4;
 }
 .scene-horror .scanlines { opacity: 1; }
-
-.idol-lights {
-position: absolute; inset: 0;
-pointer-events: none; opacity: 0;
-transition: opacity 0.7s; z-index: 3; overflow: hidden;
-}
+.idol-lights { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.7s; z-index: 3; overflow: hidden; }
 .scene-idol .idol-lights { opacity: 1; }
-.spotlight {
-position: absolute; border-radius: 50%; filter: blur(30px);
-animation: spotMove 3s ease-in-out infinite alternate;
-}
+.spotlight { position: absolute; border-radius: 50%; filter: blur(30px); animation: spotMove 3s ease-in-out infinite alternate; }
 .sp1{width:20%;height:55%;background:rgba(255,100,200,0.18);top:-10%;left:10%;animation-delay:0s;}
 .sp2{width:18%;height:52%;background:rgba(100,200,255,0.18);top:-8%;left:35%;animation-delay:0.5s;}
 .sp3{width:20%;height:55%;background:rgba(255,220,50,0.15);top:-10%;left:60%;animation-delay:1s;}
@@ -97,60 +62,40 @@ animation: spotMove 3s ease-in-out infinite alternate;
 .glitter{position:absolute;border-radius:50%;animation:glitPulse 2s ease-in-out infinite;}
 @keyframes glitPulse{0%,100%{opacity:0;transform:scale(0.5);}50%{opacity:1;transform:scale(1);}}
 
-/* ==============================
-キャラクター（% ベース配置）
-============================== */
 .character-wrap {
-position: absolute;
-z-index: 8;
+position: absolute; z-index: 8;
 display: flex; align-items: flex-end;
-transform-origin: bottom center;
-background: transparent;
-transition: opacity 0.3s;
+transform-origin: bottom center; background: transparent; transition: opacity 0.3s;
 }
 .character-wrap.hidden { opacity: 0; pointer-events: none; }
 .character {
 height: 100%; width: auto; display: block;
 filter: drop-shadow(0 2% 4% rgba(0,0,0,0.6));
 animation: breathe 4s ease-in-out infinite;
-transform-origin: bottom center;
-transition: filter 0.5s;
-pointer-events: none;
+transform-origin: bottom center; transition: filter 0.5s; pointer-events: none;
 }
 #charWrap2 .character { animation-delay: 0.8s; }
 .scene-horror .character{filter:drop-shadow(0 2% 4% rgba(0,0,0,0.8)) drop-shadow(0 0 2% rgba(180,0,0,0.4));}
 .scene-idol   .character{filter:drop-shadow(0 2% 4% rgba(0,0,0,0.4)) drop-shadow(0 0 3% rgba(255,150,220,0.6));}
 @keyframes breathe{0%,100%{transform:translateY(0);}50%{transform:translateY(-0.8%)}}
-
 .character-wrap.drag-over .character{filter:drop-shadow(0 0 3% rgba(220,190,120,0.9)) !important;}
 .drop-hint{display:none;position:absolute;inset:0;border:2px dashed rgba(220,190,120,0);border-radius:6px;align-items:center;justify-content:center;transition:border-color 0.3s,background 0.3s;pointer-events:none;}
 .character-wrap.drag-over .drop-hint{display:flex;border-color:rgba(220,190,120,0.8);background:rgba(220,190,120,0.08);}
 .drop-hint span{color:rgba(220,190,120,0);font-size:clamp(10px,1.5vw,14px);letter-spacing:2px;transition:color 0.3s;background:rgba(0,0,0,0.5);padding:4px 10px;border-radius:4px;}
 .character-wrap.drag-over .drop-hint span{color:rgba(220,190,120,1);}
 
-/* キャラクター設定パネル */
 .char-panel {
-background: rgba(18,16,30,0.95);
-border: 1px solid rgba(255,255,255,0.1);
-border-radius: 8px;
-padding: 14px 16px 12px;
+background: rgba(18,16,30,0.95); border: 1px solid rgba(255,255,255,0.1);
+border-radius: 8px; padding: 14px 16px 12px;
 display: flex; flex-direction: column; gap: 10px;
 }
-.char-panel-title {
-color: rgba(200,185,150,0.6);
-font-size: clamp(10px,1.1vw,12px);
-letter-spacing: 2px;
-font-family: ‘Noto Sans JP’, sans-serif;
-}
+.char-panel-title { color: rgba(200,185,150,0.6); font-size: clamp(10px,1.1vw,12px); letter-spacing: 2px; font-family: ‘Noto Sans JP’, sans-serif; }
 .char-tabs { display: flex; gap: 6px; }
 .char-tab {
 flex: 1; padding: 6px 8px; border-radius: 4px;
-border: 1px solid rgba(255,255,255,0.15);
-background: rgba(255,255,255,0.04);
-color: rgba(200,185,150,0.5);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
-cursor: pointer; transition: all 0.2s; text-align: center;
-font-family: ‘Noto Sans JP’, sans-serif;
+border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04);
+color: rgba(200,185,150,0.5); font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
+cursor: pointer; transition: all 0.2s; text-align: center; font-family: ‘Noto Sans JP’, sans-serif;
 }
 .char-tab.active { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.35); }
 .char-slot { display: none; flex-direction: column; gap: 10px; }
@@ -158,12 +103,9 @@ font-family: ‘Noto Sans JP’, sans-serif;
 .char-upload-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .char-upload-btn {
 padding: 5px 14px; border-radius: 4px;
-border: 1px solid rgba(200,165,80,0.3);
-background: rgba(200,165,80,0.07);
-color: rgba(210,185,120,0.75);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
-cursor: pointer; transition: all 0.2s;
-font-family: ‘Noto Sans JP’, sans-serif;
+border: 1px solid rgba(200,165,80,0.3); background: rgba(200,165,80,0.07);
+color: rgba(210,185,120,0.75); font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
+cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-serif;
 }
 .char-upload-btn:hover { background: rgba(200,165,80,0.18); color:#fff; }
 .char-upload-btn.danger { border-color: rgba(200,80,80,0.3); background: rgba(200,80,80,0.07); color: rgba(220,120,120,0.75); }
@@ -171,90 +113,57 @@ font-family: ‘Noto Sans JP’, sans-serif;
 .char-filename { color: rgba(180,160,120,0.5); font-size: clamp(9px,1vw,11px); font-family: ‘Noto Sans JP’, sans-serif; letter-spacing: 1px; }
 
 /* ==============================
-テキストボックス（% ベース）
+テキストボックス
 ============================== */
-
-/* 名前ボックス（テキストボックスの外、独立配置） */
 .name-box {
-position: absolute;
-bottom: 28%;
-left: 4%;
-z-index: 21;
-background: var(–nb-bg, linear-gradient(135deg,rgba(70,50,20,0.95),rgba(50,35,10,0.98)));
-border: 1px solid var(–nb-border, rgba(200,165,80,0.5));
+position: absolute; bottom: 28%; left: 4%; z-index: 21;
+background: rgba(5,4,14,0.97);
+border: 2px solid rgba(210,175,90,0.8);
 border-bottom: none;
-padding: 1% 3% 1%;
-border-radius: 5px 5px 0 0;
-transition: background 0.6s;
+padding: 1% 3% 1%; border-radius: 5px 5px 0 0;
+transition: border-color 0.6s, color 0.6s;
 }
 .name-text {
-color: var(–name-color, #f5e4b0);
-font-size: clamp(10px, 2vw, 16px);
-font-weight: 700; letter-spacing: 3px;
-text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-transition: color 0.6s;
-font-family: ‘Noto Serif JP’, serif;
-white-space: nowrap;
+color: #f5e4b0;
+font-size: clamp(10px, 2vw, 16px); font-weight: 700; letter-spacing: 3px;
+text-shadow: 0 1px 6px rgba(0,0,0,0.7); transition: color 0.6s;
+font-family: ‘Noto Serif JP’, serif; white-space: nowrap;
 }
-
-/* 会話テキスト本体 */
 .textbox {
 position: absolute; bottom: 0; left: 0; right: 0;
-height: 28%;
-z-index: 20;
-border-top: 1px solid var(–tb-border, rgba(180,150,90,0.35));
+height: 28%; z-index: 20;
+border-top: 3px solid rgba(210,175,90,0.8);
 padding: 3% 5% 2%;
-background: var(–tb-bg, linear-gradient(180deg,rgba(8,6,20,0.92),rgba(5,4,14,0.98)));
-transition: background 0.6s;
-overflow: hidden;
-box-sizing: border-box;
+background: rgba(5,4,14,0.97);
+backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+transition: border-color 0.6s; overflow: hidden; box-sizing: border-box;
 }
 .textbox::before {
 content:’’; position:absolute; top:0; left:0; right:0; height:1px;
-background: var(–tb-line, linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent));
+background: linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent);
 }
 .dialogue {
-color: var(–dlg-color, #f0e8d8);
-font-size: clamp(10px, 2vw, 17px);
-line-height: 1.8; letter-spacing: 0.05em;
-text-shadow: 0 1px 4px rgba(0,0,0,0.9);
-transition: color 0.6s;
+color: #f0e8d8;
+font-size: clamp(10px, 2vw, 17px); line-height: 1.8; letter-spacing: 0.05em;
+text-shadow: 0 1px 4px rgba(0,0,0,0.9); transition: color 0.6s;
 font-family: ‘Noto Serif JP’, serif;
 }
-.next-cursor{
+.next-cursor {
 position:absolute; bottom:8%; right:3%;
 width:clamp(7px,1.2vw,12px); height:clamp(7px,1.2vw,12px);
-border-right:2px solid var(–cursor-color,rgba(210,175,90,0.8));
-border-bottom:2px solid var(–cursor-color,rgba(210,175,90,0.8));
-transform:rotate(45deg);
-animation:blink-cursor 1.3s ease-in-out infinite;
+border-right:2px solid rgba(210,175,90,0.8);
+border-bottom:2px solid rgba(210,175,90,0.8);
+transform:rotate(45deg); animation:blink-cursor 1.3s ease-in-out infinite;
 }
 @keyframes blink-cursor{0%,100%{opacity:1;transform:rotate(45deg) translateY(0);}50%{opacity:0.2;transform:rotate(45deg) translateY(2px);}}
 
 /* シーン別カラー変数 */
-.scene-manor  {–tb-border:rgba(180,150,90,0.35);–tb-bg:linear-gradient(180deg,rgba(8,6,20,0.87),rgba(5,4,14,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(210,175,90,0.6) 25%,rgba(240,210,130,0.8) 50%,rgba(210,175,90,0.6) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(70,50,20,0.95),rgba(50,35,10,0.98));–nb-border:rgba(200,165,80,0.5);–name-color:#f5e4b0;–dlg-color:#f0e8d8;–cursor-color:rgba(210,175,90,0.8);}
-.scene-horror {–tb-border:rgba(180,20,20,0.4);–tb-bg:linear-gradient(180deg,rgba(15,2,2,0.92),rgba(8,0,0,0.97));–tb-line:linear-gradient(90deg,transparent,rgba(180,20,20,0.5) 25%,rgba(220,40,40,0.7) 50%,rgba(180,20,20,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(60,5,5,0.97),rgba(40,2,2,0.99));–nb-border:rgba(180,30,30,0.6);–name-color:#ffb0b0;–dlg-color:#f5dada;–cursor-color:rgba(200,40,40,0.8);}
-.scene-idol   {–tb-border:rgba(255,120,200,0.4);–tb-bg:linear-gradient(180deg,rgba(20,5,35,0.88),rgba(10,2,25,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(255,120,200,0.5) 25%,rgba(255,200,255,0.8) 50%,rgba(120,180,255,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(120,20,100,0.95),rgba(80,10,70,0.98));–nb-border:rgba(255,150,220,0.5);–name-color:#ffd6f5;–dlg-color:#f8eeff;–cursor-color:rgba(255,150,220,0.9);}
-.scene-sakura {–tb-border:rgba(220,160,180,0.4);–tb-bg:linear-gradient(180deg,rgba(30,10,18,0.85),rgba(18,5,12,0.95));–tb-line:linear-gradient(90deg,transparent,rgba(220,140,170,0.6) 25%,rgba(255,180,210,0.8) 50%,rgba(220,140,170,0.6) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(90,30,50,0.95),rgba(60,15,30,0.98));–nb-border:rgba(220,150,180,0.5);–name-color:#ffd6e8;–dlg-color:#fff0f5;–cursor-color:rgba(230,150,180,0.9);}
-.scene-school {–tb-border:rgba(100,140,200,0.35);–tb-bg:linear-gradient(180deg,rgba(5,10,25,0.88),rgba(3,6,18,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(100,140,200,0.5) 25%,rgba(150,185,240,0.8) 50%,rgba(100,140,200,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(20,35,80,0.95),rgba(10,20,55,0.98));–nb-border:rgba(120,155,220,0.5);–name-color:#c8deff;–dlg-color:#eef4ff;–cursor-color:rgba(130,170,230,0.9);}
-.scene-city   {–tb-border:rgba(80,200,220,0.35);–tb-bg:linear-gradient(180deg,rgba(3,8,20,0.9),rgba(2,5,15,0.97));–tb-line:linear-gradient(90deg,transparent,rgba(60,180,220,0.5) 25%,rgba(100,220,255,0.8) 50%,rgba(60,180,220,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(10,30,60,0.95),rgba(5,18,40,0.98));–nb-border:rgba(60,180,220,0.5);–name-color:#b8f0ff;–dlg-color:#e8f8ff;–cursor-color:rgba(80,200,230,0.9);}
-.scene-church  {–tb-border:rgba(180,160,220,0.4);–tb-bg:linear-gradient(180deg,rgba(10,8,25,0.88),rgba(6,5,18,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(160,140,210,0.5) 25%,rgba(200,180,255,0.8) 50%,rgba(160,140,210,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(40,30,70,0.95),rgba(25,18,50,0.98));–nb-border:rgba(180,160,230,0.5);–name-color:#e8e0ff;–dlg-color:#f5f2ff;–cursor-color:rgba(180,160,230,0.9);}
-.scene-cafe    {–tb-border:rgba(180,140,90,0.4);–tb-bg:linear-gradient(180deg,rgba(20,12,5,0.88),rgba(12,7,2,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(180,140,80,0.5) 25%,rgba(220,180,100,0.8) 50%,rgba(180,140,80,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(70,45,15,0.95),rgba(50,30,8,0.98));–nb-border:rgba(190,150,80,0.5);–name-color:#f5e4b0;–dlg-color:#fff8ec;–cursor-color:rgba(200,160,80,0.9);}
-.scene-beach   {–tb-border:rgba(220,100,40,0.45);–tb-bg:linear-gradient(180deg,rgba(15,5,2,0.88),rgba(8,3,1,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(220,100,40,0.5) 25%,rgba(255,150,60,0.8) 50%,rgba(220,100,40,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(80,25,5,0.95),rgba(55,15,2,0.98));–nb-border:rgba(220,100,40,0.55);–name-color:#ffd8a0;–dlg-color:#fff5e8;–cursor-color:rgba(240,140,60,0.9);}
-.scene-library {–tb-border:rgba(140,110,70,0.4);–tb-bg:linear-gradient(180deg,rgba(12,8,3,0.9),rgba(7,5,1,0.97));–tb-line:linear-gradient(90deg,transparent,rgba(160,125,70,0.5) 25%,rgba(200,165,100,0.8) 50%,rgba(160,125,70,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(55,35,10,0.96),rgba(38,22,5,0.99));–nb-border:rgba(170,130,70,0.5);–name-color:#f0deb0;–dlg-color:#fdf6e8;–cursor-color:rgba(190,150,80,0.9);}
-.scene-forest  {–tb-border:rgba(80,160,60,0.4);–tb-bg:linear-gradient(180deg,rgba(4,12,3,0.88),rgba(2,7,1,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(70,150,50,0.5) 25%,rgba(100,190,70,0.8) 50%,rgba(70,150,50,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(15,45,8,0.95),rgba(8,28,4,0.98));–nb-border:rgba(80,160,50,0.5);–name-color:#d0f0b0;–dlg-color:#f0fce8;–cursor-color:rgba(90,180,60,0.9);}
-.scene-shrine  {–tb-border:rgba(180,40,30,0.4);–tb-bg:linear-gradient(180deg,rgba(15,5,3,0.88),rgba(8,3,1,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(180,40,25,0.5) 25%,rgba(220,60,40,0.8) 50%,rgba(180,40,25,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(70,15,8,0.95),rgba(50,8,4,0.98));–nb-border:rgba(200,50,35,0.5);–name-color:#ffd0c0;–dlg-color:#fff5f0;–cursor-color:rgba(210,60,40,0.9);}
-.scene-train   {–tb-border:rgba(80,110,200,0.4);–tb-bg:linear-gradient(180deg,rgba(5,8,20,0.9),rgba(3,5,14,0.97));–tb-line:linear-gradient(90deg,transparent,rgba(80,110,200,0.5) 25%,rgba(120,150,240,0.8) 50%,rgba(80,110,200,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(18,28,70,0.95),rgba(10,16,48,0.98));–nb-border:rgba(100,130,220,0.5);–name-color:#c0d0ff;–dlg-color:#eef2ff;–cursor-color:rgba(120,150,230,0.9);}
-.scene-space   {–tb-border:rgba(140,80,220,0.4);–tb-bg:linear-gradient(180deg,rgba(5,2,18,0.92),rgba(2,1,10,0.98));–tb-line:linear-gradient(90deg,transparent,rgba(120,60,200,0.5) 25%,rgba(180,100,255,0.8) 50%,rgba(120,60,200,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(35,12,80,0.96),rgba(20,6,50,0.99));–nb-border:rgba(160,90,240,0.5);–name-color:#e0c0ff;–dlg-color:#f5eeff;–cursor-color:rgba(180,110,255,0.9);}
-.scene-hospital{–tb-border:rgba(100,150,200,0.35);–tb-bg:linear-gradient(180deg,rgba(5,10,18,0.88),rgba(3,6,12,0.96));–tb-line:linear-gradient(90deg,transparent,rgba(100,148,200,0.5) 25%,rgba(140,190,240,0.8) 50%,rgba(100,148,200,0.5) 75%,transparent);–nb-bg:linear-gradient(135deg,rgba(15,30,55,0.95),rgba(8,18,35,0.98));–nb-border:rgba(120,168,220,0.5);–name-color:#d0e8ff;–dlg-color:#f0f8ff;–cursor-color:rgba(130,178,230,0.9);}
 
-/* トップメニュー */
 .topbar{position:absolute;top:0;left:0;right:0;height:6.5%;display:flex;align-items:center;justify-content:flex-end;padding:0 2%;gap:1.5%;z-index:20;pointer-events:none;}
 .topbar > *{pointer-events:auto;}
 .game-title{margin-right:auto;color:rgba(210,185,120,0.45);font-size:clamp(8px,1.1vw,12px);letter-spacing:4px;font-weight:300;background:rgba(0,0,0,0.35);padding:2px 8px;border-radius:0 0 4px 0;}
 .menu-btn{color:rgba(220,200,160,0.65);font-size:clamp(8px,1.1vw,12px);letter-spacing:1px;cursor:pointer;padding:2px 8px;border:1px solid rgba(200,165,80,0.2);border-radius:3px;background:rgba(0,0,0,0.45);}
 
-/* ドロップゾーン */
 #drop-zone{position:absolute;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);border:3px dashed rgba(220,190,120,0.7);border-radius:6px;}
 #drop-zone.active{display:flex;}
 #drop-zone p{color:#f5e4b0;font-size:clamp(14px,2vw,20px);letter-spacing:3px;text-shadow:0 2px 8px rgba(0,0,0,0.8);pointer-events:none;}
@@ -262,374 +171,99 @@ animation:blink-cursor 1.3s ease-in-out infinite;
 /* ==============================
 コントロール UI
 ============================== */
-.ui-wrap {
-width: 100%;
-max-width: 960px;
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
+.ui-wrap { width: 100%; max-width: 960px; display: flex; flex-direction: column; gap: 10px; }
 
-/* 背景ボタン */
-.scene-buttons {
-display: flex; gap: 8px; flex-wrap: wrap;
-}
+.scene-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 .scene-btn {
-flex: 1; min-width: 100px;
-padding: 8px 10px; border-radius: 5px;
-border: 1px solid rgba(255,255,255,0.18);
-background: rgba(255,255,255,0.05);
-color: rgba(220,210,190,0.65);
-font-size: clamp(11px,1.3vw,13px); letter-spacing: 1px;
+flex: 1; min-width: 100px; padding: 8px 10px; border-radius: 5px;
+border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.05);
+color: rgba(220,210,190,0.65); font-size: clamp(11px,1.3vw,13px); letter-spacing: 1px;
 cursor: pointer; font-family: ‘Noto Sans JP’, sans-serif;
 transition: all 0.2s; white-space: nowrap; text-align:center;
 }
-.scene-btn:hover, .scene-btn.active {
-background: rgba(255,255,255,0.13); color: #fff;
-border-color: rgba(255,255,255,0.4);
-}
+.scene-btn:hover, .scene-btn.active { background: rgba(255,255,255,0.13); color: #fff; border-color: rgba(255,255,255,0.4); }
 .scene-btn.active { font-weight: bold; }
-.scene-btn.custom-bg-btn {
-border-style: dashed;
-position: relative;
-}
+.scene-btn.custom-bg-btn { border-style: dashed; position: relative; }
 .scene-btn.custom-bg-btn .del-btn {
-position: absolute; top: -6px; right: -6px;
-width: 16px; height: 16px; border-radius: 50%;
-background: rgba(200,60,60,0.85); color: white;
-font-size: 10px; line-height: 16px; text-align: center;
-cursor: pointer; display: none; border: none;
-font-family: sans-serif;
+position: absolute; top: -6px; right: -6px; width: 16px; height: 16px; border-radius: 50%;
+background: rgba(200,60,60,0.85); color: white; font-size: 10px; line-height: 16px;
+text-align: center; cursor: pointer; display: none; border: none; font-family: sans-serif;
 }
 .scene-btn.custom-bg-btn:hover .del-btn { display: block; }
 .add-bg-btn {
-flex: 0 0 auto; min-width: 80px;
-padding: 8px 14px; border-radius: 5px;
-border: 2px dashed rgba(255,255,255,0.25);
-background: rgba(255,255,255,0.03);
-color: rgba(200,200,180,0.5);
-font-size: clamp(11px,1.3vw,13px); letter-spacing: 1px;
-cursor: pointer; font-family: ‘Noto Sans JP’, sans-serif;
-transition: all 0.2s; white-space: nowrap;
+flex: 0 0 auto; min-width: 80px; padding: 8px 14px; border-radius: 5px;
+border: 2px dashed rgba(255,255,255,0.25); background: rgba(255,255,255,0.03);
+color: rgba(200,200,180,0.5); font-size: clamp(11px,1.3vw,13px); letter-spacing: 1px;
+cursor: pointer; font-family: ‘Noto Sans JP’, sans-serif; transition: all 0.2s; white-space: nowrap;
 }
 .add-bg-btn:hover { background: rgba(255,255,255,0.09); color:#fff; border-color: rgba(255,255,255,0.4); }
 
-/* 調整パネル */
 .control-panel {
-background: rgba(255,255,255,0.03);
-border: 1px solid rgba(255,255,255,0.07);
-border-radius: 6px;
-padding: 10px 14px 8px;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr auto;
-gap: 10px 16px;
-align-items: center;
+background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+border-radius: 6px; padding: 10px 14px 8px;
+display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px 16px; align-items: center;
 }
-@media (max-width: 600px) {
-.control-panel { grid-template-columns: 1fr 1fr; }
-}
+@media (max-width: 600px) { .control-panel { grid-template-columns: 1fr 1fr; } }
 .ctrl-group { display: flex; flex-direction: column; gap: 6px; }
-.ctrl-label {
-color: rgba(200,185,150,0.55);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1.5px;
-display: flex; justify-content: space-between;
-}
+.ctrl-label { color: rgba(200,185,150,0.55); font-size: clamp(10px,1.1vw,12px); letter-spacing: 1.5px; display: flex; justify-content: space-between; }
 .ctrl-label strong { color: rgba(225,205,160,0.95); font-weight: 700; }
-input[type=range] {
-width: 100%; height: 4px;
--webkit-appearance: none; appearance: none;
-background: rgba(255,255,255,0.1); border-radius: 2px;
-outline: none; cursor: pointer;
-}
-input[type=range]::-webkit-slider-thumb {
--webkit-appearance: none; width: 14px; height: 14px;
-border-radius: 50%; background: rgba(215,185,115,0.9);
-box-shadow: 0 0 6px rgba(215,185,115,0.5); cursor: pointer;
-}
+input[type=range] { width: 100%; height: 4px; -webkit-appearance: none; appearance: none; background: rgba(255,255,255,0.1); border-radius: 2px; outline: none; cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: rgba(215,185,115,0.9); box-shadow: 0 0 6px rgba(215,185,115,0.5); cursor: pointer; }
 
-/* ガイド行 */
-.guide-row {
-display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
-}
-.guide-text {
-color: rgba(180,160,120,0.45);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
-}
-.file-btn {
-padding: 5px 14px; border-radius: 4px;
-border: 1px solid rgba(200,165,80,0.3);
-background: rgba(200,165,80,0.07);
-color: rgba(210,185,120,0.75);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
-cursor: pointer; transition: all 0.2s;
-}
-.file-btn:hover { background: rgba(200,165,80,0.18); color:#fff; }
+.guide-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .reset-btn {
 padding: 5px 14px; border-radius: 4px;
-border: 1px solid rgba(120,100,180,0.35);
-background: rgba(120,100,180,0.07);
-color: rgba(180,165,220,0.7);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
+border: 1px solid rgba(120,100,180,0.35); background: rgba(120,100,180,0.07);
+color: rgba(180,165,220,0.7); font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
 cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
 .reset-btn:hover { background: rgba(120,100,180,0.18); color:#fff; }
 .save-btn {
-padding: 5px 16px; border-radius: 4px;
-border: 1px solid rgba(80,180,120,0.4);
-background: rgba(80,180,120,0.1);
-color: rgba(120,220,160,0.85);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
-cursor: pointer; transition: all 0.2s; white-space: nowrap;
-font-family: ‘Noto Sans JP’, sans-serif;
+padding: 8px 24px; border-radius: 4px;
+border: 1px solid rgba(80,180,120,0.4); background: rgba(80,180,120,0.1);
+color: rgba(120,220,160,0.85); font-size: clamp(11px,1.2vw,14px); letter-spacing: 1px;
+cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: ‘Noto Sans JP’, sans-serif;
 }
 .save-btn:hover { background: rgba(80,180,120,0.22); color:#fff; }
 .save-btn.saving { opacity: 0.6; pointer-events: none; }
-
-#file-input { display:none; }
-
-/* ==============================
-テキスト編集パネル
-============================== */
-.text-panel {
-background: rgba(18,16,30,0.95);
-border: 1px solid rgba(255,255,255,0.1);
-border-radius: 8px;
-padding: 14px 16px 12px;
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
-.text-panel-title {
-color: rgba(200,185,150,0.6);
-font-size: clamp(10px,1.1vw,12px);
-letter-spacing: 2px;
-font-family: ‘Noto Sans JP’, sans-serif;
-}
-.text-row {
-display: grid;
-grid-template-columns: 1fr 2fr;
-gap: 10px;
-}
-@media (max-width: 500px) { .text-row { grid-template-columns: 1fr; } }
-.text-field-group {
-display: flex;
-flex-direction: column;
-gap: 5px;
-}
-.text-field-label {
-color: rgba(200,185,150,0.55);
-font-size: clamp(10px,1.1vw,11px);
-letter-spacing: 1.5px;
-font-family: ‘Noto Sans JP’, sans-serif;
-}
-.name-input {
-background: rgba(255,255,255,0.06);
-border: 1px solid rgba(255,255,255,0.14);
-border-radius: 5px;
-color: #f0e8d8;
-font-size: clamp(12px,1.5vw,15px);
-font-family: ‘Noto Serif JP’, serif;
-padding: 8px 12px;
-outline: none;
-transition: border-color 0.2s, background 0.2s;
-width: 100%;
-}
-.name-input:focus {
-border-color: rgba(210,185,120,0.55);
-background: rgba(255,255,255,0.1);
-}
-.dialogue-input {
-background: rgba(255,255,255,0.06);
-border: 1px solid rgba(255,255,255,0.14);
-border-radius: 5px;
-color: #f0e8d8;
-font-size: clamp(12px,1.4vw,14px);
-font-family: ‘Noto Serif JP’, serif;
-padding: 8px 12px;
-outline: none;
-transition: border-color 0.2s, background 0.2s;
-width: 100%;
-resize: vertical;
-min-height: 62px;
-line-height: 1.7;
-}
-.dialogue-input:focus {
-border-color: rgba(210,185,120,0.55);
-background: rgba(255,255,255,0.1);
-}
-.text-hint {
-color: rgba(160,145,110,0.4);
-font-size: clamp(9px,1vw,11px);
-letter-spacing: 1px;
-font-family: ‘Noto Sans JP’, sans-serif;
-}
-
-/* ==============================
-ヘルプモーダル
-============================== */
-.help-overlay {
-position: fixed; inset: 0; z-index: 1000;
-background: rgba(0,0,0,0.75);
-display: flex; align-items: center; justify-content: center;
-padding: 16px;
-animation: fadeIn 0.3s ease;
-}
-.help-overlay.hidden { display: none; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.help-modal {
-background: linear-gradient(160deg, #12101e, #1a1630);
-border: 1px solid rgba(255,255,255,0.12);
-border-radius: 12px;
-max-width: 560px; width: 100%;
-max-height: 88vh;
-overflow-y: auto;
-padding: 28px 28px 24px;
-box-shadow: 0 24px 80px rgba(0,0,0,0.9);
-}
-.help-modal::-webkit-scrollbar { width: 4px; }
-.help-modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-.help-title {
-font-family: ‘Noto Serif JP’, serif;
-font-size: clamp(16px, 3vw, 22px);
-color: #f5e4b0; letter-spacing: 3px; margin-bottom: 6px;
-}
-.help-subtitle {
-font-family: ‘Noto Sans JP’, sans-serif;
-font-size: clamp(10px, 1.5vw, 13px);
-color: rgba(200,185,150,0.5); letter-spacing: 2px; margin-bottom: 24px;
-}
-.help-divider {
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(210,175,90,0.4) 30%, rgba(240,210,130,0.6) 50%, rgba(210,175,90,0.4) 70%, transparent);
-margin: 20px 0;
-}
-.help-section-title {
-font-family: ‘Noto Sans JP’, sans-serif;
-font-size: clamp(10px, 1.3vw, 12px);
-color: rgba(210,175,90,0.7); letter-spacing: 3px; margin-bottom: 12px;
-}
-.help-steps { display: flex; flex-direction: column; gap: 10px; }
-.help-step { display: flex; align-items: flex-start; gap: 12px; }
-.help-step-num {
-flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
-background: rgba(210,175,90,0.15); border: 1px solid rgba(210,175,90,0.35);
-color: rgba(210,175,90,0.9); font-size: 11px;
-font-family: ‘Noto Sans JP’, sans-serif;
-display: flex; align-items: center; justify-content: center; margin-top: 1px;
-}
-.help-step-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.help-step-text {
-font-family: ‘Noto Serif JP’, serif;
-font-size: clamp(11px, 1.6vw, 14px);
-color: #e8e0d0; line-height: 1.8; letter-spacing: 0.03em;
-}
-.help-step-text small {
-display: block; font-family: ‘Noto Sans JP’, sans-serif;
-font-size: clamp(9px, 1.1vw, 11px);
-color: rgba(200,185,150,0.5); margin-top: 2px; letter-spacing: 0.5px;
-}
-.help-close-row { margin-top: 24px; display: flex; justify-content: center; }
-.help-close-btn {
-padding: 10px 36px; border-radius: 6px;
-border: 1px solid rgba(210,175,90,0.4);
-background: rgba(210,175,90,0.1);
-color: rgba(240,210,130,0.9);
-font-size: clamp(12px, 1.5vw, 14px); letter-spacing: 3px;
-cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-serif;
-}
-.help-close-btn:hover { background: rgba(210,175,90,0.22); color: #fff; }
 .help-open-btn {
-padding: 5px 14px; border-radius: 4px;
-border: 1px solid rgba(210,175,90,0.3);
-background: rgba(210,175,90,0.07);
-color: rgba(210,185,120,0.7);
-font-size: clamp(10px,1.1vw,12px); letter-spacing: 1px;
+padding: 8px 24px; border-radius: 4px;
+border: 1px solid rgba(210,175,90,0.35); background: rgba(210,175,90,0.08);
+color: rgba(210,185,120,0.8); font-size: clamp(11px,1.2vw,14px); letter-spacing: 1px;
 cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-serif;
 }
-.help-open-btn:hover { background: rgba(210,175,90,0.18); color:#fff; }
+.help-open-btn:hover { background: rgba(210,175,90,0.2); color:#fff; }
+
+/* テキスト編集パネル */
+.text-panel {
+background: rgba(18,16,30,0.95); border: 1px solid rgba(255,255,255,0.1);
+border-radius: 8px; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 10px;
+}
+.text-panel-title { color: rgba(200,185,150,0.6); font-size: clamp(10px,1.1vw,12px); letter-spacing: 2px; font-family: ‘Noto Sans JP’, sans-serif; }
+.text-row { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
+@media (max-width: 500px) { .text-row { grid-template-columns: 1fr; } }
+.text-field-group { display: flex; flex-direction: column; gap: 5px; }
+.text-field-label { color: rgba(200,185,150,0.55); font-size: clamp(10px,1.1vw,11px); letter-spacing: 1.5px; font-family: ‘Noto Sans JP’, sans-serif; }
+.name-input {
+background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 5px;
+color: #f0e8d8; font-size: clamp(12px,1.5vw,15px); font-family: ‘Noto Serif JP’, serif;
+padding: 8px 12px; outline: none; transition: border-color 0.2s, background 0.2s; width: 100%;
+}
+.name-input:focus { border-color: rgba(210,185,120,0.55); background: rgba(255,255,255,0.1); }
+.dialogue-input {
+background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 5px;
+color: #f0e8d8; font-size: clamp(12px,1.4vw,14px); font-family: ‘Noto Serif JP’, serif;
+padding: 8px 12px; outline: none; transition: border-color 0.2s, background 0.2s; width: 100%;
+resize: vertical; min-height: 62px; line-height: 1.7;
+}
+.dialogue-input:focus { border-color: rgba(210,185,120,0.55); background: rgba(255,255,255,0.1); }
+.text-hint { color: rgba(160,145,110,0.4); font-size: clamp(9px,1vw,11px); letter-spacing: 1px; font-family: ‘Noto Sans JP’, sans-serif; }
 </style>
 
 </head>
 <body>
 
-<!-- ヘルプモーダル -->
-
-<div class="help-overlay" id="helpOverlay">
-  <div class="help-modal">
-    <div class="help-title">✦ 使い方ガイド</div>
-    <div class="help-subtitle">GAME DIALOGUE GENERATOR</div>
-
-```
-<div class="help-section-title">🌄 背景を選ぶ</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">🖼️</span>
-    <div class="help-step-text">
-      ゲーム画面の下にある背景ボタンを押すと、背景が切り替わります。
-      <small>洋館・カフェ・海辺・宇宙など15種類から選べます</small>
-    </div>
-  </div>
-  <div class="help-step">
-    <span class="help-step-icon">＋</span>
-    <div class="help-step-text">
-      「＋ 背景を追加」ボタンから、自分で用意した背景画像を追加できます。
-      <small>JPG・PNG・GIFなどの画像ファイルに対応しています</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">🎭 キャラクターを設定する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">👤</span>
-    <div class="help-step-text">
-      「キャラクター 1」「キャラクター 2」タブを切り替えて、それぞれ画像をアップロードできます。
-      <small>透明背景（PNG）の画像を使うときれいに表示されます</small>
-    </div>
-  </div>
-  <div class="help-step">
-    <span class="help-step-icon">↔️</span>
-    <div class="help-step-text">
-      スライダーでキャラクターのサイズ・左右の位置・上下の位置を調整できます。
-      <small>「↺ リセット」でデフォルト位置に戻せます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">✏️ テキストを編集する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">📝</span>
-    <div class="help-step-text">
-      「タイトル」「キャラクター名」「会話文」の入力欄を書き換えると、ゲーム画面にリアルタイムで反映されます。
-      <small>会話文は改行すると2行目に分かれます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-divider"></div>
-<div class="help-section-title">📷 画像を保存する</div>
-<div class="help-steps">
-  <div class="help-step">
-    <span class="help-step-icon">💾</span>
-    <div class="help-step-text">
-      「📷 画像を保存」ボタンを押すと、ゲーム画面がPNG画像としてダウンロードされます。
-      <small>ファイル名には日時が自動でつきます</small>
-    </div>
-  </div>
-</div>
-
-<div class="help-close-row">
-  <button class="help-close-btn" onclick="closeHelp()">は じ め る</button>
-</div>
-```
-
-  </div>
-</div>
-
-<!-- ゲーム画面（16:9 アスペクト比） -->
+<!-- ゲーム画面 -->
 
 <div class="game-outer">
   <div class="game-aspect">
@@ -678,8 +312,11 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
     <rect x="900" y="200" width="10" height="180" fill="#100e18"/><ellipse cx="905" cy="195" rx="38" ry="55" fill="#0e1c0a" opacity="0.9"/>
     <rect x="0" y="0" width="960" height="540" fill="rgba(5,3,15,0.18)"/>
   </svg>
+```
 
-  <!-- BG2: 洋館内部ホラー -->
+<!-- BG2: 洋館内部ホラー -->
+
+```
   <svg class="bg-layer" id="bg-horror" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0e0608"/><stop offset="100%" stop-color="#050203"/></linearGradient>
@@ -1775,10 +1412,8 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
   <div class="horror-flicker"></div>
   <div class="scanlines"></div>
   <div class="idol-lights">
-    <div class="spotlight sp1"></div>
-    <div class="spotlight sp2"></div>
-    <div class="spotlight sp3"></div>
-    <div class="spotlight sp4"></div>
+    <div class="spotlight sp1"></div><div class="spotlight sp2"></div>
+    <div class="spotlight sp3"></div><div class="spotlight sp4"></div>
     <div class="glitter" style="width:6px;height:6px;background:#fff;top:20%;left:15%;animation-delay:0.2s"></div>
     <div class="glitter" style="width:4px;height:4px;background:#ffccff;top:35%;left:28%;animation-delay:0.7s"></div>
     <div class="glitter" style="width:5px;height:5px;background:#ccffff;top:18%;left:55%;animation-delay:1.1s"></div>
@@ -1794,30 +1429,30 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
     <span class="menu-btn">設定</span>
   </div>
 
-  <!-- キャラクター1（右側・デフォルト） -->
+  <!-- キャラクター1 -->
   <div class="character-wrap hidden" id="charWrap">
     <img class="character" id="charImg" src="" alt="キャラクター1">
     <div class="drop-hint"><span>キャラ1</span></div>
   </div>
-  <!-- キャラクター2（左側・初期非表示） -->
+  <!-- キャラクター2 -->
   <div class="character-wrap hidden" id="charWrap2">
     <img class="character" id="charImg2" src="" alt="キャラクター2">
     <div class="drop-hint"><span>キャラ2</span></div>
   </div>
 
   <!-- テキストボックス -->
-  <div class="name-box"><span class="name-text" id="nameText">エメラ</span></div>
-  <div class="textbox">
-    <div class="dialogue" id="dialogue">この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。</div>
-    <div class="next-cursor"></div>
+  <div class="name-box" id="nameBox" style="position:absolute;bottom:28%;left:4%;z-index:21;background:rgba(5,4,14,0.97);border:2px solid rgba(210,175,90,0.8);border-bottom:none;padding:1% 3% 1%;border-radius:5px 5px 0 0;"><span class="name-text" id="nameText" style="color:#f5e4b0;font-size:clamp(10px,2vw,16px);font-weight:700;letter-spacing:3px;text-shadow:0 1px 6px rgba(0,0,0,0.7);font-family:'Noto Serif JP',serif;white-space:nowrap;">エメラ</span></div>
+  <div class="textbox" id="textBox" style="position:absolute;bottom:0;left:0;right:0;height:28%;z-index:20;border-top:3px solid rgba(210,175,90,0.8);padding:3% 5% 2%;background:rgba(5,4,14,0.97);overflow:hidden;box-sizing:border-box;">
+    <div class="dialogue" id="dialogue" style="color:#f0e8d8;font-size:clamp(10px,2vw,17px);line-height:1.8;letter-spacing:0.05em;text-shadow:0 1px 4px rgba(0,0,0,0.9);font-family:'Noto Serif JP',serif;">この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。</div>
+    <div class="next-cursor" id="nextCursor" style="position:absolute;bottom:8%;right:3%;width:clamp(7px,1.2vw,12px);height:clamp(7px,1.2vw,12px);border-right:2px solid rgba(210,175,90,0.8);border-bottom:2px solid rgba(210,175,90,0.8);transform:rotate(45deg);animation:blink-cursor 1.3s ease-in-out infinite;"></div>
   </div>
 
   <div id="drop-zone"><p>ここにイラストをドロップ</p></div>
-</div><!-- /.game-container -->
+</div>
 ```
 
-  </div><!-- /.game-aspect -->
-</div><!-- /.game-outer -->
+  </div>
+</div>
 
 <!-- コントロール UI -->
 
@@ -1845,7 +1480,7 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
   </div>
   <input type="file" id="bg-upload" accept="image/*" style="display:none">
 
-  <!-- キャラクター設定パネル -->
+  <!-- キャラクター設定 -->
 
   <div class="char-panel">
     <div class="char-panel-title">🎭 キャラクター設定</div>
@@ -1853,57 +1488,32 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
       <button class="char-tab active" id="tab1" onclick="switchCharTab(1)">👤 キャラクター 1</button>
       <button class="char-tab"       id="tab2" onclick="switchCharTab(2)">👤 キャラクター 2</button>
     </div>
-
-```
-<!-- キャラ1スロット -->
-<div class="char-slot active" id="slot1">
-  <div class="char-upload-row">
-    <button class="char-upload-btn" onclick="document.getElementById('charFile1').click()">📂 画像を選択</button>
-    <span class="char-filename" id="fname1">未設定</span>
-    <button class="char-upload-btn danger" onclick="resetChar1Img()">✕ 画像を外す</button>
-  </div>
-  <div class="control-panel">
-    <div class="ctrl-group">
-      <div class="ctrl-label">サイズ <strong id="lbl-size">78%</strong></div>
-      <input type="range" id="sl-size" min="20" max="110" value="78" oninput="updateChar()">
+    <div class="char-slot active" id="slot1">
+      <div class="char-upload-row">
+        <button class="char-upload-btn" onclick="document.getElementById('charFile1').click()">📂 画像を選択</button>
+        <span class="char-filename" id="fname1">未設定</span>
+        <button class="char-upload-btn danger" onclick="resetChar1Img()">✕ 画像を外す</button>
+      </div>
+      <div class="control-panel">
+        <div class="ctrl-group"><div class="ctrl-label">サイズ <strong id="lbl-size">78%</strong></div><input type="range" id="sl-size" min="20" max="110" value="78" oninput="updateChar()"></div>
+        <div class="ctrl-group"><div class="ctrl-label">左右 <strong id="lbl-x">右寄り</strong></div><input type="range" id="sl-x" min="0" max="100" value="80" oninput="updateChar()"></div>
+        <div class="ctrl-group"><div class="ctrl-label">上下 <strong id="lbl-y">標準</strong></div><input type="range" id="sl-y" min="-60" max="30" value="0" oninput="updateChar()"></div>
+        <button class="reset-btn" onclick="resetChar()">↺ リセット</button>
+      </div>
     </div>
-    <div class="ctrl-group">
-      <div class="ctrl-label">左右 <strong id="lbl-x">右寄り</strong></div>
-      <input type="range" id="sl-x" min="0" max="100" value="80" oninput="updateChar()">
+    <div class="char-slot" id="slot2">
+      <div class="char-upload-row">
+        <button class="char-upload-btn" onclick="document.getElementById('charFile2').click()">📂 画像を選択</button>
+        <span class="char-filename" id="fname2">未設定</span>
+        <button class="char-upload-btn danger" onclick="resetChar2Img()">✕ 画像を外す</button>
+      </div>
+      <div class="control-panel">
+        <div class="ctrl-group"><div class="ctrl-label">サイズ <strong id="lbl-size2">78%</strong></div><input type="range" id="sl-size2" min="20" max="110" value="78" oninput="updateChar2()"></div>
+        <div class="ctrl-group"><div class="ctrl-label">左右 <strong id="lbl-x2">左寄り</strong></div><input type="range" id="sl-x2" min="0" max="100" value="20" oninput="updateChar2()"></div>
+        <div class="ctrl-group"><div class="ctrl-label">上下 <strong id="lbl-y2">標準</strong></div><input type="range" id="sl-y2" min="-60" max="30" value="0" oninput="updateChar2()"></div>
+        <button class="reset-btn" onclick="resetChar2()">↺ リセット</button>
+      </div>
     </div>
-    <div class="ctrl-group">
-      <div class="ctrl-label">上下 <strong id="lbl-y">標準</strong></div>
-      <input type="range" id="sl-y" min="-60" max="30" value="0" oninput="updateChar()">
-    </div>
-    <button class="reset-btn" onclick="resetChar()">↺ リセット</button>
-  </div>
-</div>
-
-<!-- キャラ2スロット -->
-<div class="char-slot" id="slot2">
-  <div class="char-upload-row">
-    <button class="char-upload-btn" onclick="document.getElementById('charFile2').click()">📂 画像を選択</button>
-    <span class="char-filename" id="fname2">未設定</span>
-    <button class="char-upload-btn danger" onclick="resetChar2Img()">✕ 画像を外す</button>
-  </div>
-  <div class="control-panel">
-    <div class="ctrl-group">
-      <div class="ctrl-label">サイズ <strong id="lbl-size2">78%</strong></div>
-      <input type="range" id="sl-size2" min="20" max="110" value="78" oninput="updateChar2()">
-    </div>
-    <div class="ctrl-group">
-      <div class="ctrl-label">左右 <strong id="lbl-x2">左寄り</strong></div>
-      <input type="range" id="sl-x2" min="0" max="100" value="20" oninput="updateChar2()">
-    </div>
-    <div class="ctrl-group">
-      <div class="ctrl-label">上下 <strong id="lbl-y2">標準</strong></div>
-      <input type="range" id="sl-y2" min="-60" max="30" value="0" oninput="updateChar2()">
-    </div>
-    <button class="reset-btn" onclick="resetChar2()">↺ リセット</button>
-  </div>
-</div>
-```
-
   </div>
 
   <!-- テキスト編集 -->
@@ -1929,14 +1539,16 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
     </div>
   </div>
 
-  <!-- 保存・ヘルプ -->
+  <!-- 保存・ヘルプ（一番下・中央） -->
 
   <div class="guide-row">
     <button class="save-btn" id="saveBtn" onclick="saveScreenshot()">📷 画像を保存</button>
     <button class="help-open-btn" onclick="openHelp()">❓ 使い方</button>
   </div>
 
-</div><!-- /.ui-wrap -->
+</div>
+
+<!-- 隠しファイル入力 -->
 
 <input type="file" id="file-input" accept="image/*" style="display:none">
 <input type="file" id="charFile1" accept="image/*" style="display:none">
@@ -1946,76 +1558,126 @@ cursor: pointer; transition: all 0.2s; font-family: ‘Noto Sans JP’, sans-ser
 
 <script>
 // ==============================
+// ヘルプモーダル（JS生成・インラインスタイルで確実に表示）
+// ==============================
+(function() {
+  const overlay = document.createElement('div');
+  overlay.id = 'helpOverlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.82);display:flex;align-items:center;justify-content:center;padding:16px;';
+  overlay.innerHTML = `
+    <div style="background:linear-gradient(160deg,#12101e,#1a1630);border:1px solid rgba(255,255,255,0.15);border-radius:12px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,0.9);font-family:sans-serif;color:#e8e0d0;">
+      <div style="font-size:20px;color:#f5e4b0;letter-spacing:2px;margin-bottom:4px;">✦ 使い方ガイド</div>
+      <div style="font-size:11px;color:rgba(200,185,150,0.5);letter-spacing:2px;margin-bottom:20px;">GAME DIALOGUE GENERATOR</div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.85);letter-spacing:2px;margin-bottom:10px;">🌄 背景を選ぶ</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;"><span style="font-size:18px;flex-shrink:0;">🖼️</span><div style="font-size:13px;line-height:1.8;">背景ボタンを押すと切り替わります。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">洋館・カフェ・海辺・宇宙など15種類</span></div></div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;"><span style="font-size:18px;flex-shrink:0;">➕</span><div style="font-size:13px;line-height:1.8;">「＋ 背景を追加」で自分の画像を追加できます。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">JPG・PNG・GIFに対応</span></div></div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.85);letter-spacing:2px;margin-bottom:10px;">🎭 キャラクターを設定する</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;"><span style="font-size:18px;flex-shrink:0;">👤</span><div style="font-size:13px;line-height:1.8;">タブを切り替えて1・2それぞれ画像をアップロード。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">透明背景（PNG）を使うときれいに表示されます</span></div></div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;"><span style="font-size:18px;flex-shrink:0;">↔️</span><div style="font-size:13px;line-height:1.8;">スライダーでサイズ・位置を調整できます。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">「↺ リセット」でデフォルト位置に戻ります</span></div></div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.85);letter-spacing:2px;margin-bottom:10px;">✏️ テキストを編集する</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;"><span style="font-size:18px;flex-shrink:0;">📝</span><div style="font-size:13px;line-height:1.8;">タイトル・名前・会話文を入力するとリアルタイムで反映。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">会話文は改行で2行に分かれます</span></div></div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(210,175,90,0.5),transparent);margin:16px 0;"></div>
+      <div style="font-size:11px;color:rgba(210,175,90,0.85);letter-spacing:2px;margin-bottom:10px;">📷 画像を保存する</div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;"><span style="font-size:18px;flex-shrink:0;">💾</span><div style="font-size:13px;line-height:1.8;">「📷 画像を保存」でゲーム画面をPNGでダウンロード。<br><span style="font-size:11px;color:rgba(200,185,150,0.5);">ファイル名に日時が自動でつきます</span></div></div>
+      <div style="display:flex;justify-content:center;">
+        <button onclick="document.getElementById('helpOverlay').style.display='none'" style="padding:10px 40px;border-radius:6px;border:1px solid rgba(210,175,90,0.5);background:rgba(210,175,90,0.12);color:rgba(240,210,130,0.95);font-size:14px;letter-spacing:3px;cursor:pointer;font-family:sans-serif;">は じ め る</button>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', e => { if(e.target === overlay) overlay.style.display='none'; });
+  document.body.appendChild(overlay);
+})();
+
+function openHelp() { document.getElementById('helpOverlay').style.display='flex'; }
+
+// ==============================
 // スクリーンショット保存
 // ==============================
 async function saveScreenshot() {
   const btn = document.getElementById('saveBtn');
-  btn.classList.add('saving');
-  btn.textContent = '⏳ 保存中…';
-
+  btn.classList.add('saving'); btn.textContent = '⏳ 保存中…';
   try {
-    const gameEl = document.getElementById('game');
-    const canvas = await html2canvas(gameEl, {
-      useCORS: true,
-      allowTaint: true,
-      scale: 2,           // 高解像度
-      backgroundColor: null,
-      logging: false,
+    const canvas = await html2canvas(document.getElementById('game'), {
+      useCORS: true, allowTaint: true, scale: 2, backgroundColor: null, logging: false,
     });
-
-    // ファイル名に日時を入れる
     const now = new Date();
-    const ts  = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
-
+    const ts = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
     const a = document.createElement('a');
-    a.download = `game_scene_${ts}.png`;
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  } catch(e) {
-    alert('保存に失敗しました。もう一度お試しください。');
-    console.error(e);
-  } finally {
-    btn.classList.remove('saving');
-    btn.textContent = '📷 画像を保存';
-  }
+    a.download = `game_scene_${ts}.png`; a.href = canvas.toDataURL('image/png'); a.click();
+  } catch(e) { alert('保存に失敗しました。'); console.error(e); }
+  finally { btn.classList.remove('saving'); btn.textContent = '📷 画像を保存'; }
 }
+
 // ==============================
 // シーン切り替え
 // ==============================
 const scenes = {
-  manor:  { title:'Crimson Manor',   text:'この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。' },
-  horror: { title:'Crimson Manor',   text:'…………聞こえる。　壁の向こうから、<br>何かが　こちらを　見ている。' },
-  idol:   { title:'STARLIGHT STAGE', text:'みんな、今夜は来てくれてありがとう！<br>精いっぱい、歌うね　――！' },
-  sakura: { title:'春の記憶',         text:'風が吹くたびに、花びらがひらりと落ちてきて……<br>こんな日は、どこかへ行きたくなるね。' },
-  school: { title:'放課後の教室',     text:'チャイムが鳴っても、教室にはまだ<br>あなたの声が残っているみたいな気がして。' },
-  city:   { title:'夜の街',           text:'ネオンが滲んで、雨粒がガラスを伝う夜。<br>この街の中で、ふたりだけが止まっていた。' },
-  church:   { title:'静寂の礼拝堂',   text:'ステンドグラスの光が、静かに床を染めて……<br>ここだけ、時間が違う速さで流れているみたい。' },
-  cafe:     { title:'午後のカフェ',   text:'コーヒーの香りが漂う午後、<br>ここでなら、ゆっくり話せる気がした。' },
-  beach:    { title:'夕暮れの海',     text:'波の音と、沈んでいく太陽。<br>この景色を、ずっと覚えていたいな。' },
-  library:  { title:'静かな図書館',   text:'本の匂いと、静かなページをめくる音。<br>あなたに会ったのも、たしかこの場所だった。' },
-  forest:   { title:'緑の森',         text:'木漏れ日が揺れて、鳥の声が聞こえる。<br>ここは、世界から隠れられる場所。' },
-  shrine:   { title:'桜の神社',       text:'鳥居の向こうに、花びらが舞っている。<br>なんだか、特別な日みたいな気がするの。' },
-  train:    { title:'どこかへ向かう車内', text:'窓の外を景色が流れていく。<br>あなたの隣が、いちばん落ち着く場所だよ。' },
-  space:    { title:'星の果てで',     text:'無数の星が、私たちを包んでいる。<br>こんな場所でも、あなたがそばにいる。' },
-  hospital: { title:'白い部屋',       text:'静かで、白くて、時間がゆっくりな場所。<br>でも……あなたが来てくれたから、大丈夫。' },
+  manor:    { title:'Crimson Manor',       text:'この館には……　ずっと昔から、誰かが住んでいるって<br>村のひとたちはそう言うの。' },
+  horror:   { title:'Crimson Manor',       text:'…………聞こえる。　壁の向こうから、<br>何かが　こちらを　見ている。' },
+  idol:     { title:'STARLIGHT STAGE',     text:'みんな、今夜は来てくれてありがとう！<br>精いっぱい、歌うね　――！' },
+  sakura:   { title:'春の記憶',             text:'風が吹くたびに、花びらがひらりと落ちてきて……<br>こんな日は、どこかへ行きたくなるね。' },
+  school:   { title:'放課後の教室',         text:'チャイムが鳴っても、教室にはまだ<br>あなたの声が残っているみたいな気がして。' },
+  city:     { title:'夜の街',               text:'ネオンが滲んで、雨粒がガラスを伝う夜。<br>この街の中で、ふたりだけが止まっていた。' },
+  church:   { title:'静寂の礼拝堂',         text:'ステンドグラスの光が、静かに床を染めて……<br>ここだけ、時間が違う速さで流れているみたい。' },
+  cafe:     { title:'午後のカフェ',         text:'コーヒーの香りが漂う午後、<br>ここでなら、ゆっくり話せる気がした。' },
+  beach:    { title:'夕暮れの海',           text:'波の音と、沈んでいく太陽。<br>この景色を、ずっと覚えていたいな。' },
+  library:  { title:'静かな図書館',         text:'本の匂いと、静かなページをめくる音。<br>あなたに会ったのも、たしかこの場所だった。' },
+  forest:   { title:'緑の森',               text:'木漏れ日が揺れて、鳥の声が聞こえる。<br>ここは、世界から隠れられる場所。' },
+  shrine:   { title:'桜の神社',             text:'鳥居の向こうに、花びらが舞っている。<br>なんだか、特別な日みたいな気がするの。' },
+  train:    { title:'どこかへ向かう車内',   text:'窓の外を景色が流れていく。<br>あなたの隣が、いちばん落ち着く場所だよ。' },
+  space:    { title:'星の果てで',           text:'無数の星が、私たちを包んでいる。<br>こんな場所でも、あなたがそばにいる。' },
+  hospital: { title:'白い部屋',             text:'静かで、白くて、時間がゆっくりな場所。<br>でも……あなたが来てくれたから、大丈夫。' },
 };
-// カスタム背景の管理
-let customBgCount = 0;
-let currentCustomId = null;
+
+let customBgCount = 0, currentCustomId = null;
+
+const sceneStyles = {
+  manor:    { border:'rgba(210,175,90,0.8)',  line:'rgba(210,175,90,0.6)',  name:'#f5e4b0', dlg:'#f0e8d8', cursor:'rgba(210,175,90,0.8)' },
+  horror:   { border:'rgba(220,40,40,0.9)',   line:'rgba(220,40,40,0.7)',   name:'#ffb0b0', dlg:'#f5dada', cursor:'rgba(200,40,40,0.8)' },
+  idol:     { border:'rgba(255,150,220,0.8)', line:'rgba(255,150,220,0.6)', name:'#ffd6f5', dlg:'#f8eeff', cursor:'rgba(255,150,220,0.9)' },
+  sakura:   { border:'rgba(230,160,185,0.8)', line:'rgba(220,140,170,0.6)', name:'#ffd6e8', dlg:'#fff0f5', cursor:'rgba(230,150,180,0.9)' },
+  school:   { border:'rgba(120,160,230,0.8)', line:'rgba(120,160,220,0.6)', name:'#c8deff', dlg:'#eef4ff', cursor:'rgba(130,170,230,0.9)' },
+  city:     { border:'rgba(80,200,240,0.8)',  line:'rgba(80,200,240,0.6)',  name:'#b8f0ff', dlg:'#e8f8ff', cursor:'rgba(80,200,230,0.9)' },
+  church:   { border:'rgba(190,165,235,0.8)', line:'rgba(180,150,220,0.6)', name:'#e8e0ff', dlg:'#f5f2ff', cursor:'rgba(180,160,230,0.9)' },
+  cafe:     { border:'rgba(200,155,80,0.8)',  line:'rgba(190,145,75,0.6)',  name:'#f5e4b0', dlg:'#fff8ec', cursor:'rgba(200,160,80,0.9)' },
+  beach:    { border:'rgba(240,110,40,0.8)',  line:'rgba(230,105,40,0.6)',  name:'#ffd8a0', dlg:'#fff5e8', cursor:'rgba(240,140,60,0.9)' },
+  library:  { border:'rgba(190,145,75,0.8)',  line:'rgba(180,135,70,0.6)',  name:'#f0deb0', dlg:'#fdf6e8', cursor:'rgba(190,150,80,0.9)' },
+  forest:   { border:'rgba(80,175,55,0.8)',   line:'rgba(75,165,50,0.6)',   name:'#d0f0b0', dlg:'#f0fce8', cursor:'rgba(90,180,60,0.9)' },
+  shrine:   { border:'rgba(200,50,35,0.8)',   line:'rgba(190,45,30,0.6)',   name:'#ffd0c0', dlg:'#fff5f0', cursor:'rgba(210,60,40,0.9)' },
+  train:    { border:'rgba(100,135,230,0.8)', line:'rgba(95,130,220,0.6)',  name:'#c0d0ff', dlg:'#eef2ff', cursor:'rgba(120,150,230,0.9)' },
+  space:    { border:'rgba(175,95,245,0.8)',  line:'rgba(165,90,235,0.6)',  name:'#e0c0ff', dlg:'#f5eeff', cursor:'rgba(180,110,255,0.9)' },
+  hospital: { border:'rgba(115,165,225,0.8)', line:'rgba(110,160,215,0.6)', name:'#d0e8ff', dlg:'#f0f8ff', cursor:'rgba(130,178,230,0.9)' },
+};
+
+function applySceneStyle(name) {
+  const s = sceneStyles[name] || sceneStyles.manor;
+  const tb = document.getElementById('textBox');
+  const nb = document.getElementById('nameBox');
+  const dlg = document.getElementById('dialogue');
+  const nt = document.getElementById('nameText');
+  const cur = document.getElementById('nextCursor');
+  if (tb) tb.style.borderTopColor = s.border;
+  if (nb) nb.style.borderColor = s.border;
+  if (dlg) dlg.style.color = s.dlg;
+  if (nt) nt.style.color = s.name;
+  if (cur) { cur.style.borderRightColor = s.cursor; cur.style.borderBottomColor = s.cursor; }
+}
 
 function switchScene(name, btn) {
   currentCustomId = null;
   document.getElementById('game').className = 'game-container scene-' + name;
   document.querySelectorAll('.bg-layer').forEach(el => el.classList.remove('active'));
-  document.getElementById('bg-' + name).classList.add('active');
+  const bgEl = document.getElementById('bg-' + name);
+  if (bgEl) bgEl.classList.add('active');
   document.querySelectorAll('.custom-bg-layer').forEach(el => el.classList.remove('active'));
   document.getElementById('gameTitle').textContent = scenes[name].title;
   document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const textPlain = scenes[name].text.replace(/<br>/g, '\n');
-  document.getElementById('edit-dialogue').value = textPlain;
+  document.getElementById('edit-dialogue').value = scenes[name].text.replace(/<br>/g, '\n');
   document.getElementById('dialogue').innerHTML = scenes[name].text;
   document.getElementById('edit-title').value = scenes[name].title;
+  applySceneStyle(name);
 }
 
 function switchCustomScene(id, btn) {
@@ -2032,205 +1694,108 @@ function deleteCustomBg(id, event) {
   event.stopPropagation();
   document.getElementById('custom-btn-' + id)?.remove();
   document.getElementById('custom-bg-' + id)?.remove();
-  if (currentCustomId === id) {
-    switchScene('manor', document.querySelector('.scene-btn'));
-  }
+  if (currentCustomId === id) switchScene('manor', document.querySelector('.scene-btn'));
 }
 
 document.getElementById('bg-upload').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file || !file.type.startsWith('image/')) return;
   const reader = new FileReader();
-  reader.onload = function(ev) {
+  reader.onload = ev => {
     const id = ++customBgCount;
-    const imgUrl = ev.target.result;
     const name = file.name.replace(/\.[^.]+$/, '');
-    // 背景レイヤーをゲーム画面に追加
-    const gameEl = document.getElementById('game');
     const div = document.createElement('div');
-    div.id = 'custom-bg-' + id;
-    div.className = 'custom-bg-layer';
-    div.style.cssText = `position:absolute;inset:0;width:100%;height:100%;background:url('${imgUrl}') center/cover no-repeat;z-index:0;display:none;`;
-    gameEl.insertBefore(div, gameEl.firstChild);
-    // ボタンを追加（「＋背景を追加」の直前）
+    div.id = 'custom-bg-' + id; div.className = 'custom-bg-layer';
+    div.style.cssText = `position:absolute;inset:0;width:100%;height:100%;background:url('${ev.target.result}') center/cover no-repeat;z-index:0;display:none;`;
+    document.getElementById('game').insertBefore(div, document.getElementById('game').firstChild);
     const addBtn = document.querySelector('.add-bg-btn');
     const btn = document.createElement('button');
-    btn.id = 'custom-btn-' + id;
-    btn.className = 'scene-btn custom-bg-btn';
+    btn.id = 'custom-btn-' + id; btn.className = 'scene-btn custom-bg-btn';
     btn.innerHTML = `🖼️ ${name.slice(0,8)}<button class="del-btn" onclick="deleteCustomBg(${id},event)">✕</button>`;
     btn.onclick = () => switchCustomScene(id, btn);
     addBtn.parentNode.insertBefore(btn, addBtn);
-    // 追加したらすぐ切り替え
     switchCustomScene(id, btn);
   };
-  reader.readAsDataURL(file);
-  this.value = '';
+  reader.readAsDataURL(file); this.value = '';
 });
 
-// ==============================
 // テキスト編集
-// ==============================
 function updateText() {
-  const title = document.getElementById('edit-title').value;
-  const name  = document.getElementById('edit-name').value;
-  const raw   = document.getElementById('edit-dialogue').value;
-  const html  = raw.replace(/\n/g, '<br>');
-  document.getElementById('gameTitle').textContent  = title || '　';
-  document.getElementById('nameText').textContent   = name  || '　';
-  document.getElementById('dialogue').innerHTML     = html;
+  document.getElementById('gameTitle').textContent = document.getElementById('edit-title').value || '　';
+  document.getElementById('nameText').textContent  = document.getElementById('edit-name').value  || '　';
+  document.getElementById('dialogue').innerHTML    = document.getElementById('edit-dialogue').value.replace(/\n/g, '<br>');
 }
 
-// ==============================
-// キャラクタータブ切り替え
-// ==============================
+// タブ切り替え
 function switchCharTab(n) {
-  document.getElementById('tab1').classList.toggle('active', n === 1);
-  document.getElementById('tab2').classList.toggle('active', n === 2);
-  document.getElementById('slot1').classList.toggle('active', n === 1);
-  document.getElementById('slot2').classList.toggle('active', n === 2);
+  document.getElementById('tab1').classList.toggle('active', n===1);
+  document.getElementById('tab2').classList.toggle('active', n===2);
+  document.getElementById('slot1').classList.toggle('active', n===1);
+  document.getElementById('slot2').classList.toggle('active', n===2);
 }
 
-// ==============================
-// キャラクター1 位置・サイズ調整
-// ==============================
-const charWrap  = document.getElementById('charWrap');
+// キャラクター1
+const charWrap = document.getElementById('charWrap');
 const charWrap2 = document.getElementById('charWrap2');
 
 function updateChar() {
-  const sizeP    = parseInt(document.getElementById('sl-size').value);
-  const xVal     = parseInt(document.getElementById('sl-x').value);
-  const yVal     = parseInt(document.getElementById('sl-y').value);
-  const tbPct    = 38;
-  const bottomPct = tbPct - yVal;
-  const rightPct  = (100 - xVal) * 0.8;
-  charWrap.style.height = sizeP + '%';
-  charWrap.style.bottom = bottomPct + '%';
-  charWrap.style.right  = rightPct + '%';
-  charWrap.style.left   = 'auto';
-  charWrap.style.width  = 'auto';
-  document.getElementById('lbl-size').textContent = sizeP + '%';
-  document.getElementById('lbl-x').textContent =
-    xVal >= 75 ? '右寄り' : xVal >= 50 ? '中央右' : xVal >= 25 ? '中央左' : '左寄り';
-  document.getElementById('lbl-y').textContent =
-    yVal > 8 ? '上' : yVal < -8 ? '下' : '標準';
+  const s = parseInt(document.getElementById('sl-size').value);
+  const x = parseInt(document.getElementById('sl-x').value);
+  const y = parseInt(document.getElementById('sl-y').value);
+  charWrap.style.height = s + '%';
+  charWrap.style.bottom = (38 - y) + '%';
+  charWrap.style.right  = ((100-x)*0.8) + '%';
+  charWrap.style.left   = 'auto'; charWrap.style.width = 'auto';
+  document.getElementById('lbl-size').textContent = s + '%';
+  document.getElementById('lbl-x').textContent = x>=75?'右寄り':x>=50?'中央右':x>=25?'中央左':'左寄り';
+  document.getElementById('lbl-y').textContent = y>8?'上':y<-8?'下':'標準';
 }
-
 function resetChar() {
-  document.getElementById('sl-size').value = 78;
-  document.getElementById('sl-x').value   = 80;
-  document.getElementById('sl-y').value   = 0;
-  updateChar();
+  document.getElementById('sl-size').value=78; document.getElementById('sl-x').value=80; document.getElementById('sl-y').value=0; updateChar();
 }
 
-// ==============================
-// キャラクター2 位置・サイズ調整
-// ==============================
+// キャラクター2
 function updateChar2() {
-  const sizeP    = parseInt(document.getElementById('sl-size2').value);
-  const xVal     = parseInt(document.getElementById('sl-x2').value);
-  const yVal     = parseInt(document.getElementById('sl-y2').value);
-  const tbPct    = 38;
-  const bottomPct = tbPct - yVal;
-  const leftPct   = xVal * 0.8;
-  charWrap2.style.height = sizeP + '%';
-  charWrap2.style.bottom = bottomPct + '%';
-  charWrap2.style.left   = leftPct + '%';
-  charWrap2.style.right  = 'auto';
-  charWrap2.style.width  = 'auto';
-  document.getElementById('lbl-size2').textContent = sizeP + '%';
-  document.getElementById('lbl-x2').textContent =
-    xVal >= 75 ? '右寄り' : xVal >= 50 ? '中央右' : xVal >= 25 ? '中央左' : '左寄り';
-  document.getElementById('lbl-y2').textContent =
-    yVal > 8 ? '上' : yVal < -8 ? '下' : '標準';
+  const s = parseInt(document.getElementById('sl-size2').value);
+  const x = parseInt(document.getElementById('sl-x2').value);
+  const y = parseInt(document.getElementById('sl-y2').value);
+  charWrap2.style.height = s + '%';
+  charWrap2.style.bottom = (38 - y) + '%';
+  charWrap2.style.left   = (x*0.8) + '%';
+  charWrap2.style.right  = 'auto'; charWrap2.style.width = 'auto';
+  document.getElementById('lbl-size2').textContent = s + '%';
+  document.getElementById('lbl-x2').textContent = x>=75?'右寄り':x>=50?'中央右':x>=25?'中央左':'左寄り';
+  document.getElementById('lbl-y2').textContent = y>8?'上':y<-8?'下':'標準';
 }
-
 function resetChar2() {
-  document.getElementById('sl-size2').value = 78;
-  document.getElementById('sl-x2').value   = 20;
-  document.getElementById('sl-y2').value   = 0;
-  updateChar2();
+  document.getElementById('sl-size2').value=78; document.getElementById('sl-x2').value=20; document.getElementById('sl-y2').value=0; updateChar2();
 }
 
-// ==============================
-// キャラクター画像の読み込み
-// ==============================
+// 画像読み込み
 function loadCharImage(file, imgId, fnameId, wrapId) {
   if (!file || !file.type.startsWith('image/')) return;
   const r = new FileReader();
   r.onload = e => {
     document.getElementById(imgId).src = e.target.result;
     document.getElementById(fnameId).textContent = file.name;
-    const wrap = document.getElementById(wrapId);
-    wrap.classList.remove('hidden');
+    document.getElementById(wrapId).classList.remove('hidden');
   };
   r.readAsDataURL(file);
 }
+function resetChar1Img() { document.getElementById('charImg').src=''; document.getElementById('fname1').textContent='未設定'; charWrap.classList.add('hidden'); }
+function resetChar2Img() { document.getElementById('charImg2').src=''; document.getElementById('fname2').textContent='未設定'; charWrap2.classList.add('hidden'); }
 
-function resetChar1Img() {
-  document.getElementById('charImg').src = '';
-  document.getElementById('fname1').textContent = '未設定';
-  charWrap.classList.add('hidden');
-}
-function resetChar2Img() {
-  document.getElementById('charImg2').src = '';
-  document.getElementById('fname2').textContent = '未設定';
-  charWrap2.classList.add('hidden');
-}
+document.getElementById('charFile1').addEventListener('change', e => { loadCharImage(e.target.files[0],'charImg','fname1','charWrap'); e.target.value=''; });
+document.getElementById('charFile2').addEventListener('change', e => { loadCharImage(e.target.files[0],'charImg2','fname2','charWrap2'); e.target.value=''; });
+document.getElementById('file-input').addEventListener('change', e => { loadCharImage(e.target.files[0],'charImg','fname1','charWrap'); e.target.value=''; });
 
-document.getElementById('charFile1').addEventListener('change', e => {
-  loadCharImage(e.target.files[0], 'charImg', 'fname1', 'charWrap');
-  e.target.value = '';
-});
-document.getElementById('charFile2').addEventListener('change', e => {
-  loadCharImage(e.target.files[0], 'charImg2', 'fname2', 'charWrap2');
-  e.target.value = '';
-});
+updateChar(); updateChar2();
 
-// 後方互換（古いfile-input）
-document.getElementById('file-input').addEventListener('change', e => {
-  loadCharImage(e.target.files[0], 'charImg', 'fname1', 'charWrap');
-  e.target.value = '';
-});
-
-// 初期適用
-updateChar();
-updateChar2();
-
-// ==============================
-// ドラッグ＆ドロップ（背景へのドロップのみ）
-// ==============================
+// ドラッグ＆ドロップ
 const game = document.getElementById('game');
-
-game.addEventListener('dragover', e => {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.add('active');
-});
-game.addEventListener('dragleave', e => {
-  if (!game.contains(e.relatedTarget)) {
-    document.getElementById('drop-zone').classList.remove('active');
-  }
-});
-game.addEventListener('drop', e => {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.remove('active');
-  // ドロップはキャラ1に適用
-  const file = e.dataTransfer.files[0];
-  loadCharImage(file, 'charImg', 'fname1', 'charWrap');
-});
-
-// ==============================
-// ヘルプモーダル
-// ==============================
-function openHelp() {
-  document.getElementById('helpOverlay').classList.remove('hidden');
-}
-function closeHelp() {
-  document.getElementById('helpOverlay').classList.add('hidden');
-}
-// 背景クリックで閉じる
-document.getElementById('helpOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeHelp();
-});
+game.addEventListener('dragover', e => { e.preventDefault(); document.getElementById('drop-zone').classList.add('active'); });
+game.addEventListener('dragleave', e => { if(!game.contains(e.relatedTarget)) document.getElementById('drop-zone').classList.remove('active'); });
+game.addEventListener('drop', e => { e.preventDefault(); document.getElementById('drop-zone').classList.remove('active'); loadCharImage(e.dataTransfer.files[0],'charImg','fname1','charWrap'); });
 </script>
 
 </body>
