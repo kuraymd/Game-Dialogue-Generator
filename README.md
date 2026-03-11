@@ -24,7 +24,8 @@ https://kuraymd.github.io/Game-Dialogue-Generator/
 
 ## Example
 <img width="756" height="476" alt="game_scene_20260311_090547" src="https://github.com/user-attachments/assets/921727e5-9561-4bf2-8098-e2f78bf9f5b5" />
-<img width="756" height="476" alt="game_scene_20260311_090547" src="https://github.com/user-attachments/assets/921727e5-9561-4bf2-8098-e2f78bf9f5b5" />
+<img width="1920" height="1080" alt="game_scene_20260309_235501" src="https://github.com/user-attachments/assets/ea83ccfa-1ae3-41c6-a075-76ff84f95245" />
+<img width="1920" height="1080" alt="game_scene_20260309_235535" src="https://github.com/user-attachments/assets/d89e1149-90e7-4a3f-b0e4-c5dc94b4b628" />
 
 
 Create scenes like a **visual novel game screen** using your own character art.
