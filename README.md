@@ -23,9 +23,11 @@ https://kuraymd.github.io/Game-Dialogue-Generator/
 - Upload **your own custom background**
 
 ## Example
-<img width="1920" height="1080" alt="game_scene_20260311_090547" src="https://github.com/user-attachments/assets/921727e5-9561-4bf2-8098-e2f78bf9f5b5" />
-<img width="1920" height="1080" alt="game_scene_20260309_235501" src="https://github.com/user-attachments/assets/ea83ccfa-1ae3-41c6-a075-76ff84f95245" />
-<img width="1920" height="1080" alt="game_scene_20260309_235535" src="https://github.com/user-attachments/assets/d89e1149-90e7-4a3f-b0e4-c5dc94b4b628" />
+<img width="1920" height="1128" alt="game_scene_20260312_001656" src="https://github.com/user-attachments/assets/9af6f197-bf70-4587-ad54-999fa6108c82" />
+
+<img width="1920" height="1080" alt="game_scene_20260309_235501" src="https://github.com/user-attachments/assets/18f751df-0b9f-4d6e-bddf-72fa8f5eb8ef" />
+
+<img width="1920" height="1080" alt="game_scene_20260309_235535" src="https://github.com/user-attachments/assets/4105d962-661c-4834-9208-42c8ee4461c1" />
 
 
 Create scenes like a **visual novel game screen** using your own character art.
